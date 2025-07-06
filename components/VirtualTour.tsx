@@ -1,288 +1,229 @@
-// components/VirtualTour.tsx
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback, Suspense } from 'react';
 import * as THREE from 'three';
+import { EXRLoader, RGBELoader } from 'three/examples/jsm/Addons.js';
 
-// Fix for OrbitControls import
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { Canvas, useLoader } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 
+// --- Interfaces (kept as is) ---
 interface Hotspot {
   position: { x: number; y: number; z: number };
-  target: number;
   label: string;
+  target?: number; // For navigation hotspots
+  info?: InfoContent; // For info hotspots
+}
+
+interface InfoContent {
+  title: string;
+  description: string;
 }
 
 interface Location {
   name: string;
-  image: string;
+  image: string; // Path to the panoramic image
   hotspots: Hotspot[];
 }
+// --- End Interfaces ---
 
-export default function VirtualTour() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [currentLocation, setCurrentLocation] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const sceneRef = useRef<THREE.Scene | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const controlsRef = useRef<OrbitControls | null>(null);
-  const sphereRef = useRef<THREE.Mesh | null>(null);
-  const raycasterRef = useRef(new THREE.Raycaster());
-  const mouseRef = useRef(new THREE.Vector2());
+const locations: Location[] = [
+  {
+    name: "Main Hall",
+    image: "/locations/main-hall.jpg",
+    hotspots: [
+      { position: { x: -0.8, y: -0.2, z: 0.5 }, label: "To Office", target: 1 },
+      { position: { x: 1.2, y: 0, z: 0.55 }, label: "Info about Hall", info: { title: "Main Hall", description: "This is the main hall of our building. It's spacious and welcoming!" } },
+    ],
+  },
+  {
+    name: "Garden",
+    image: "/locations/garden.exr",
+    hotspots: [
+      { position: { x: 0.8, y: -0.2, z: -0.5 }, label: "Back to Hall", target: 0 },
+      { position: { x: -0.5, y: 0.3, z: -0.8 }, label: "Info about Desk", info: { title: "Office Desk", description: "This is a typical office desk, equipped with a monitor and keyboard." } },
+    ],
+  },
+  {
+    name: "Sunset",
+    image: "/locations/sunset.hdr",
+    hotspots: [
+      { position: { x: 0.8, y: -0.2, z: -0.5 }, label: "Back to Hall", target: 0 },
+      { position: { x: -0.5, y: 0.3, z: -0.8 }, label: "Info about Desk", info: { title: "Office Desk", description: "This is a typical office desk, equipped with a monitor and keyboard." } },
+    ],
+  },
+];
 
-  // Tour data
-  const locations: Location[] = [
-    {
-      name: "Main Hall",
-      image: "/locations/main-hall.jpg",
-      hotspots: [
-        { position: { x: 2, y: 0, z: 2 }, target: 1, label: "Classroom" }
-      ]
-    },
-    {
-      name: "Classroom",
-      image: "/locations/classroom.jpg",
-      hotspots: [
-        { position: { x: -2, y: 0, z: 2 }, target: 0, label: "Main Hall" },
-        { position: { x: 0, y: 0, z: -3 }, target: 2, label: "Garden" }
-      ]
-    },
-    {
-      name: "Garden",
-      image: "/locations/garden.jpg",
-      hotspots: [
-        { position: { x: 0, y: 0, z: 3 }, target: 1, label: "Classroom" }
-      ]
+// --- Panorama Component (unchanged from last iteration) ---
+interface PanoramaProps {
+  imageUrl: string;
+  onTextureLoaded: () => void;
+  onTextureError: (error: Error) => void;
+}
+
+function Panorama({ imageUrl, onTextureLoaded, onTextureError }: PanoramaProps) {
+  let texture: THREE.Texture;
+  const fileExtension = imageUrl.split('.').pop()?.toLowerCase();
+
+  try {
+    if (fileExtension === 'hdr') {
+      texture = useLoader(RGBELoader, imageUrl);
+    } else if (fileExtension === 'exr') {
+      texture = useLoader(EXRLoader, imageUrl);
+    } else {
+      texture = useLoader(THREE.TextureLoader, imageUrl);
     }
-  ];
+  } catch (error: any) {
+    useEffect(() => {
+      onTextureError(error);
+    }, [error, onTextureError]);
+    throw error;
+  }
 
   useEffect(() => {
-    // Initialize scene
-    const scene = new THREE.Scene();
-    sceneRef.current = scene;
-    
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    cameraRef.current = camera;
-    
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    rendererRef.current = renderer;
-    
-    if (containerRef.current) {
-      containerRef.current.appendChild(renderer.domElement);
+    if (texture) {
+      onTextureLoaded();
     }
-    
-    // Add orbit controls
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controlsRef.current = controls;
-    
-    // Add lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambientLight);
-    
-    // Initial load
-    loadLocation(currentLocation);
-    
-    // Event listeners
-    window.addEventListener('resize', handleResize);
-    renderer.domElement.addEventListener('click', handleClick);
-    
-    // Animation loop
-    const animate = () => {
-      requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    };
-    animate();
-    
-    // Cleanup
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (renderer.domElement) {
-        renderer.domElement.removeEventListener('click', handleClick);
-      }
-      controls.dispose();
-      renderer.dispose();
-      cleanScene(scene);
-    };
+  }, [texture, onTextureLoaded]);
+
+  return (
+    <mesh scale={[-1, 1, 1]}>
+      <sphereGeometry args={[500, 60, 40]} />
+      <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
+    </mesh>
+  );
+}
+// --- End Panorama Component ---
+
+
+// --- HOTSPOT COMPONENT (UPDATED) ---
+interface HotspotComponentProps {
+  hotspot: Hotspot;
+  infoIconTexture: THREE.Texture | null;
+  onHotspotClick: (hotspot: Hotspot) => void;
+}
+
+function HotspotComponent({ hotspot, infoIconTexture, onHotspotClick }: HotspotComponentProps) {
+  const position = React.useMemo(() => new THREE.Vector3(
+    hotspot.position.x * 50,
+    hotspot.position.y * 50,
+    hotspot.position.z * 50
+  ), [hotspot.position]);
+
+  // Create canvas texture for the hotspot label (UPDATED RESOLUTION AND FONT)
+const labelTexture = React.useMemo(() => {
+  const canvas = document.createElement('canvas');
+  // Increased resolution for better quality text
+  canvas.width = 512;
+  canvas.height = 128;
+  const context = canvas.getContext('2d');
+  if (context) {
+    const radius = 30; // Define the corner radius
+    const x = 0;
+    const y = 0;
+    const width = canvas.width;
+    const height = canvas.height;
+
+    context.fillStyle = 'rgba(0, 0, 0, 0.7)';
+
+    // Begin drawing the rounded rectangle path
+    context.beginPath();
+    context.moveTo(x + radius, y);
+    context.lineTo(x + width - radius, y);
+    context.arcTo(x + width, y, x + width, y + radius, radius);
+    context.lineTo(x + width, y + height - radius);
+    context.arcTo(x + width, y + height, x + width - radius, y + height, radius);
+    context.lineTo(x + radius, y + height);
+    context.arcTo(x, y + height, x, y + height - radius, radius);
+    context.lineTo(x, y + radius);
+    context.arcTo(x, y, x + radius, y, radius);
+    context.closePath();
+    context.fill(); // Fill the rounded rectangle path
+
+    // Increased font size proportionally
+    context.font = '60px Arial';
+    context.fillStyle = 'white';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';  
+    context.fillText(hotspot.label, canvas.width / 2, canvas.height / 2);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  // Ensure good filtering for the text texture
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  return texture;
+}, [hotspot.label]);
+
+  const handleClick = useCallback((event: any) => {
+    event.stopPropagation();
+    onHotspotClick(hotspot);
+  }, [hotspot, onHotspotClick]);
+
+  if (hotspot.info) {
+    if (!infoIconTexture) return null;
+
+    return (
+      <group position={position}>
+        {/* Info icon sprite (UPDATED SCALE) */}
+        <sprite scale={[4, 4, 1.3]} onClick={handleClick}> {/* Reduced from 10 to 3 */}
+          <spriteMaterial map={infoIconTexture} transparent />
+        </sprite>
+        {/* Label sprite positioned relative to the icon (UPDATED SCALE) */}
+        <sprite position={[0, 3, 0]} scale={[12, 3, 2]}> {/* Adjusted scale to match new canvas resolution */}
+          <spriteMaterial map={labelTexture} />
+        </sprite>
+      </group>
+    );
+  } else { // Navigation hotspot
+    return (
+      <group position={position}>
+        <mesh onClick={handleClick}>
+          <sphereGeometry args={[0.5, 16, 16]} />
+          <meshBasicMaterial color={0xff3366} transparent opacity={0.8} />
+        </mesh>
+        {/* Label sprite positioned relative to the sphere (UPDATED SCALE) */}
+        <sprite position={[0, 1.0, 0]} scale={[6, 1.5, 1]}> {/* Adjusted scale to match new canvas resolution */}
+          <spriteMaterial map={labelTexture} />
+        </sprite>
+      </group>
+    );
+  }
+}
+// --- END HOTSPOT COMPONENT ---
+
+
+export default function VirtualTour() {
+  const [currentLocation, setCurrentLocation] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState<InfoContent | null>(null);
+
+  const infoIconTextureRef = useRef<THREE.Texture | null>(null);
+
+  const handleHotspotClick = useCallback((hotspot: Hotspot) => {
+    if (hotspot.target !== undefined) {
+      setCurrentLocation(hotspot.target);
+    } else if (hotspot.info) {
+      setModalContent(hotspot.info);
+      setShowModal(true);
+    }
   }, []);
 
   useEffect(() => {
-    if (sceneRef.current && cameraRef.current) {
-      loadLocation(currentLocation);
-    }
-  }, [currentLocation]);
+    // Make sure your info.svg is in the public directory: /public/icons/info.svg
+    new THREE.TextureLoader().load('/icons/info.svg', (texture) => {
+      infoIconTextureRef.current = texture;
+      console.log('Info icon texture loaded.');
+    });
+  }, []);
 
-  const loadLocation = async (index: number) => {
-    if (!sceneRef.current) return;
-    
+  useEffect(() => {
     setIsLoading(true);
-    const location = locations[index];
-    
-    // Clean previous scene
-    if (sphereRef.current) {
-      sceneRef.current.remove(sphereRef.current);
-      cleanMaterial(sphereRef.current.material as THREE.Material);
-    }
-    clearHotspots();
-    
-    try {
-      // Load texture
-      const texture = await new Promise<THREE.Texture>((resolve, reject) => {
-        new THREE.TextureLoader().load(
-          location.image,
-          resolve,
-          undefined,
-          reject
-        );
-      });
-      
-      // Create sphere geometry
-      const geometry = new THREE.SphereGeometry(500, 60, 40);
-      geometry.scale(-1, 1, 1); // Flip inside out
-      
-      const material = new THREE.MeshBasicMaterial({ 
-        map: texture,
-        side: THREE.DoubleSide
-      });
-      
-      const sphere = new THREE.Mesh(geometry, material);
-      sceneRef.current.add(sphere);
-      sphereRef.current = sphere;
-      
-      // Add hotspots
-      location.hotspots.forEach(hotspot => addHotspot(hotspot));
-      
-    } catch (error) {
-      console.error('Error loading location:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const addHotspot = (hotspot: Hotspot) => {
-    if (!sceneRef.current) return;
-    
-    // Create hotspot indicator
-    const geometry = new THREE.SphereGeometry(0.5, 16, 16);
-    const material = new THREE.MeshBasicMaterial({ 
-      color: 0xff3366,
-      transparent: true,
-      opacity: 0.8
-    });
-    
-    const hotspotMesh = new THREE.Mesh(geometry, material);
-    hotspotMesh.position.set(
-      hotspot.position.x * 50,
-      hotspot.position.y * 50,
-      hotspot.position.z * 50
-    );
-    
-    // Add label
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    if (context) {
-      canvas.width = 256;
-      canvas.height = 64;
-      context.fillStyle = 'rgba(0, 0, 0, 0.7)';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-      context.font = '24px Arial';
-      context.fillStyle = 'white';
-      context.textAlign = 'center';
-      context.fillText(hotspot.label, canvas.width/2, canvas.height/2 + 8);
-      
-      const texture = new THREE.CanvasTexture(canvas);
-      const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
-      const sprite = new THREE.Sprite(spriteMaterial);
-      sprite.position.set(0, 1.5, 0);
-      sprite.scale.set(4, 1, 1);
-      hotspotMesh.add(sprite);
-    }
-    
-    hotspotMesh.userData = { 
-      target: hotspot.target,
-      label: hotspot.label 
-    };
-    
-    sceneRef.current.add(hotspotMesh);
-  };
-
-  const clearHotspots = () => {
-    if (!sceneRef.current) return;
-    
-    sceneRef.current.traverse(child => {
-      if (child instanceof THREE.Mesh && child.userData?.target !== undefined) {
-        sceneRef.current?.remove(child);
-        cleanMaterial(child.material as THREE.Material);
-      }
-    });
-  };
-
-  const handleClick = (event: MouseEvent) => {
-    if (!cameraRef.current || !sceneRef.current || !rendererRef.current) return;
-    
-    // Calculate mouse position
-    const rect = rendererRef.current.domElement.getBoundingClientRect();
-    
-    mouseRef.current.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    mouseRef.current.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    
-    // Raycast
-    raycasterRef.current.setFromCamera(mouseRef.current, cameraRef.current);
-    const intersects = raycasterRef.current.intersectObjects(sceneRef.current.children);
-    
-    for (const intersect of intersects) {
-      if (intersect.object.userData?.target !== undefined) {
-        setCurrentLocation(intersect.object.userData.target);
-        break;
-      }
-    }
-  };
-
-  const handleResize = () => {
-    if (cameraRef.current && rendererRef.current) {
-      cameraRef.current.aspect = window.innerWidth / window.innerHeight;
-      cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(window.innerWidth, window.innerHeight);
-    }
-  };
-
-  const cleanScene = (scene: THREE.Scene) => {
-    while(scene.children.length > 0) {
-      const object = scene.children[0];
-      scene.remove(object);
-      disposeObject(object);
-    }
-  };
-
-  const disposeObject = (object: THREE.Object3D) => {
-    if (object instanceof THREE.Mesh) {
-      object.geometry?.dispose();
-      
-      // Handle both single material and material arrays
-      const materials = Array.isArray(object.material)
-        ? object.material
-        : [object.material];
-      
-      materials.forEach(material => cleanMaterial(material));
-    }
-  };
-
-  const cleanMaterial = (material: THREE.Material) => {
-    material.dispose();
-    
-    // Dispose texture if it exists
-    if ('map' in material && material.map instanceof THREE.Texture) {
-    material.map.dispose();
-  }
-  };
+  }, [currentLocation]);
 
   return (
     <div className="relative w-screen h-screen bg-gray-900 overflow-hidden">
+      {/* Loading Overlay */}
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-50">
           <div className="flex flex-col items-center">
@@ -291,7 +232,27 @@ export default function VirtualTour() {
           </div>
         </div>
       )}
-      
+
+      {/* Info Modal */}
+      {showModal && modalContent && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg shadow-xl max-w-sm w-full p-6 relative">
+            <h3 className="text-xl font-bold text-gray-900 mb-2">{modalContent.title}</h3>
+            <p className="text-gray-700 text-sm mb-4">{modalContent.description}</p>
+            <button
+              onClick={(e) => { e.stopPropagation(); setShowModal(false); }}
+              className="absolute top-2 right-2 p-2 text-gray-600 hover:text-gray-900 rounded-full hover:bg-gray-100"
+              aria-label="Close modal"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Location Navigation Buttons */}
       <div className="absolute top-4 left-4 z-40 flex flex-wrap gap-2">
         {locations.map((location, index) => (
           <button
@@ -307,13 +268,48 @@ export default function VirtualTour() {
           </button>
         ))}
       </div>
-      
+
+      {/* Instructions and Current Location Display */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40 bg-black/70 text-white px-4 py-2 rounded-lg text-center max-w-md">
         <p className="text-sm">Drag to look around • Click locations to navigate</p>
         <p className="text-xs mt-1 text-gray-300">Currently viewing: {locations[currentLocation].name}</p>
       </div>
-      
-      <div ref={containerRef} className="w-full h-full" />
+
+      {/* THREE.JS CANVAS CONTAINER */}
+      <Canvas
+        dpr={[1, 2]}
+        camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 0, 0.1] }}
+        className="w-full h-full"
+      >
+        <Suspense fallback={null}>
+          <Panorama
+            imageUrl={locations[currentLocation].image}
+            onTextureLoaded={() => setIsLoading(false)}
+            onTextureError={(error) => {
+              console.error("Error loading panorama texture:", error);
+              setIsLoading(false);
+            }}
+          />
+
+          {locations[currentLocation].hotspots.map((hotspot, index) => (
+              <HotspotComponent
+                key={index}
+                hotspot={hotspot}
+                infoIconTexture={infoIconTextureRef.current}
+                onHotspotClick={handleHotspotClick}
+              />
+          ))}
+        </Suspense>
+
+        <OrbitControls
+          enableDamping
+          dampingFactor={0.05}
+          minDistance={1}
+          maxDistance={1000}
+          target={[0, 0, 0]}
+          enableZoom={false} // THIS LINE DISABLES ZOOM
+        />
+      </Canvas>
     </div>
   );
 }
