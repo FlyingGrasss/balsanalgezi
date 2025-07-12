@@ -40,7 +40,7 @@ const locations: Location[] = [
       // Navigation arrow to "Girişten sonraki yol" (target: 1), no label displayed, points forward
       { position: { x: -3.5, y: -0.1, z: -0.25 }, label: "", target: 1, type: 'animated-arrow', direction: [0, 0, 0] },
       // Info hotspot example
-      { position: { x: -1, y: 0, z: 1.5 }, label: "Konferans Salonu", info: { title: "Konferans Salonu", description: "Okulumuzun Konferans Salonu. Geniş ve ferah!" }, type: 'info' },
+      // { position: { x: -1, y: 0, z: 1.5 }, label: "Konferans Salonu", info: { title: "Konferans Salonu", description: "Okulumuzun Konferans Salonu. Geniş ve ferah!" }, type: 'info' },
     ],
   },
   {
@@ -541,7 +541,7 @@ export default function VirtualTour() {
       )}
 
       {/* Location Navigation Buttons */}
-      <div className="absolute top-4 left-4 z-40 flex flex-wrap gap-2">
+      <div className="absolute top-4 hidden left-4 z-40 flex-wrap gap-2">
         {locations.map((location, index) => (
           <button
             key={index}
@@ -557,11 +557,6 @@ export default function VirtualTour() {
         ))}
       </div>
 
-      {/* Instructions and Current Location Display */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40 bg-black/70 text-white px-4 py-2 rounded-lg text-center max-w-md">
-        <p className="text-sm">Drag to look around • Click locations to navigate</p>
-        <p className="text-xs mt-1 text-gray-300">Currently viewing: {locations[currentLocation].name}</p>
-      </div>
 
       {/* THREE.JS CANVAS CONTAINER */}
       <Canvas
