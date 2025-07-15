@@ -500,12 +500,10 @@ function Panorama({ imageUrl, onTextureLoaded, onTextureError, meshRotation }: P
 
 // --- Inline SVG Contents ---
 const INFO_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`;
-const HAMBURGER_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`;
-const CLOSE_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
-const ARROW_DOWN_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 24 24" fill="purple" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-down"><path d="M15 6v6h4l-7 7-7-7h4V6h6z"/></svg>`;
+const ARROW_DOWN_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 24 24" fill="purple" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-down-icon lucide-arrow-big-down"><path d="M15 6v6h4l-7 7-7-7h4V6h6z"/></svg>`;
 const ARROW_LEFT_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 24 24" fill="purple" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-left"><path d="M18 15h-6v4l-7-7 7-7v4h6v6z"/></svg>`;
 const ARROW_RIGHT_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 24 24" fill="purple" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-right"><path d="M6 9h6V5l7 7-7 7v-4H6V9z"/></svg>`;
-const ARROW_UP_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 24 24" fill="purple" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-up"><path d="M9 18v-6H5l7-7 7 7v4h-4v6H9z"/></svg>`;
+const ARROW_UP_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 24 24" fill="purple" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-up-icon lucide-arrow-big-up"><path d="M9 18v-6H5l7-7 7 7h-4v6H9z"/></svg>`;
 // --- End Inline SVG Contents ---
 
 // Function to create a texture from SVG string at a higher resolution
@@ -810,6 +808,9 @@ function WelcomeModal({ onStartTour }: WelcomeModalProps) {
           <h3 className="text-xl font-bold text-red-700 mt-6 mb-2">Bu Sanal Turu Hazırlamada Yardımcı Olanlar</h3>
           <ul className="list-disc list-inside space-y-1">
             <li><strong>Yazılım:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Emre Bozkurt</a></li>
+            <li><strong>Nigger:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Canberk Özçağan</a></li>
+
+            <li><strong>   :</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Devran Ersönmez</a></li>
             <li><strong>Proje Görevlisi:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Ali Başar Muslu</a></li>
 
           </ul>
