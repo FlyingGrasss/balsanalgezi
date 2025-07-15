@@ -293,6 +293,7 @@ const locations: Location[] = [
     panoramaRotation: [0, Math.PI * -0.2, 0],
     hotspots: [
       { position: { x: 3, y: -0.05, z: -0.5 }, label: "", target: 28, type: 'animated-arrow-down' },
+      { position: { x: -1, y: -0.05, z: -3.5 }, label: "", target: 26, type: 'animated-arrow-down' },
     ],
   },
   {
@@ -1031,6 +1032,7 @@ export default function VirtualTour() {
               maxDistance={1000}
               target={[0, 0, 0]}
               enableZoom={false}
+              rotateSpeed={-1}
             />
           </Canvas>
         </>
