@@ -809,6 +809,7 @@ function WelcomeModal({ onStartTour }: WelcomeModalProps) {
           <h3 className="text-xl font-bold text-red-700 mt-6 mb-2">Bu Sanal Turu Hazırlamada Yardımcı Olanlar</h3>
           <ul className="list-disc list-inside space-y-1">
             <li><strong>Yazılım:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Emre Bozkurt</a></li>
+            <li><strong>Yazılım Yardımcısı:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Canberk Özçağan</a></li>
 
             <li><strong>Proje Görevlisi:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Ali Başar Muslu</a></li>
 
