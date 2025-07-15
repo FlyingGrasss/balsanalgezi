@@ -30,845 +30,423 @@ interface Location {
 // --- End Interfaces ---
 
 const locations: Location[] = [
-
-  {
-
-    name: "Giriş",
-
-    image: "/locations/optimized/1.webp",
-
-    panoramaRotation: [0, 0, 0],
-
-    hotspots: [
-
-      { position: { x: -3.5, y: -0.1, z: -0.25 }, label: "", target: 1, type: 'animated-arrow-down' },
-
-      { position: { x: 1.5, y: -0.05, z: 4 }, label: "", target: 41, type: 'animated-arrow-down' },
-
-      { position: { x: -1.5, y: -0.05, z: 4 }, label: "", target: 43, type: 'animated-arrow-right' },
-
-      // { position: { x: -1, y: 0, z: 1.5 }, label: "Konferans Salonu", info: { title: "Konferans Salonu", description: "Okulumuzun Konferans Salonu. Geniş ve ferah!" }, type: 'info' },
-
-    ],
-
-    initialCameraTarget: [-1, 0, 1], // Default camera target
-
-  },
-
-  {
-
-    name: "2",
-
-    image: "/locations/optimized/2.webp",
-
-    panoramaRotation: [0, 0, 0],
-
-    hotspots: [
-
-      { position: { x: 3.5, y: -0.1, z: 0.2 }, label: "", target: 0, type: 'animated-arrow-down' },
-
-      { position: { x: -0.5, y: -0.1, z: -4 }, label: "", target: 42, type: 'animated-arrow-down' },
-
-      { position: { x: -4.5, y: -0.1, z: -0.4 }, label: "", target: 2, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "3",
-
-    image: "/locations/optimized/3.webp",
-
-    panoramaRotation: [0, Math.PI * 1.1, 0],
-
-    hotspots: [
-
-      { position: { x: 4, y: -0.05, z: 0.3 }, label: "", target: 1, type: 'animated-arrow-down' },
-
-      { position: { x: 0, y: -0.1, z: -4 }, label: "", target: 3, type: 'animated-arrow-down' },
-
-      { position: { x: -2.5, y: -0.1, z: -2.5 }, label: "", target: 5, type: 'animated-arrow-down' },
-
-      { position: { x: -3, y: -0.1, z: -0.2 }, label: "", target: 10, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Anaokulu Arkası",
-
-    image: "/locations/optimized/4.webp",
-
-    panoramaRotation: [0, Math.PI * 0.8, 0],
-
-    hotspots: [
-
-      { position: { x: 0, y: -0, z: 4 }, label: "", target: 2, type: 'animated-arrow-down' },
-
-      { position: { x: -2.5, y: -0, z: 3.6 }, label: "", target: 5, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "B Blok ile C Blok Arası",
-
-    image: "/locations/optimized/5.webp",
-
-    panoramaRotation: [0, Math.PI * 0.7, 0],
-
-    hotspots: [
-
-      { position: { x: 0.4, y: -0, z: 3 }, label: "", target: 10, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "B Blok Önü",
-
-    image: "/locations/optimized/6.webp",
-
-    panoramaRotation: [0, Math.PI * 0.3, 0],
-
-    hotspots: [
-
-      { position: { x: 2.5, y: -0.1, z: 2.6 }, label: "", target: 2, type: 'animated-arrow-down' },
-
-      { position: { x: 2, y: -0.1, z: -3 }, label: "", target: 3, type: 'animated-arrow-down' },
-
-      { position: { x: 0.5, y: -0.1, z: -2.4 }, label: "", target: 6, type: 'animated-arrow-down' },
-
-      { position: { x: -2, y: -0, z: 2.4 }, label: "", target: 10, type: 'animated-arrow-down' },
-
-      { position: { x: -2.2, y: 0, z: -3 }, label: "", target: 4, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "B Blok Giriş",
-
-    image: "/locations/optimized/7.webp",
-
-    panoramaRotation: [0, Math.PI * 1, 0],
-
-    hotspots: [
-
-      { position: { x: -0.5, y: -0.1, z: 3.2 }, label: "", target: 5, type: 'animated-arrow-down' },
-
-      { position: { x: 0.65, y: -0.1, z: -4 }, label: "", target: 7, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "B Blok Koridor",
-
-    image: "/locations/optimized/8.webp",
-
-    panoramaRotation: [0, Math.PI * 0.8, 0],
-
-    hotspots: [
-
-      { position: { x: -0.6, y: -0.1, z: 3.8 }, label: "", target: 6, type: 'animated-arrow-down' },
-
-      { position: { x: -2.3, y: -0.1, z: 1 }, label: "", target: 8, type: 'animated-arrow-down' },
-
-      { position: { x: -0.2, y: -0.1, z: -2.9 }, label: "", target: 9, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Matematik ve Bilim Atölyesi",
-
-    image: "/locations/optimized/9.webp",
-
-    panoramaRotation: [0, Math.PI * 0.3, 0],
-
-    hotspots: [
-
-      { position: { x: 2.5, y: -0.1, z: -2.5 }, label: "", target: 7, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Robotik Odası",
-
-    image: "/locations/optimized/10.webp",
-
-    panoramaRotation: [0, Math.PI * 0.3, 0],
-
-    hotspots: [
-
-      { position: { x: -2, y: -0.1, z: -2.8 }, label: "", target: 7, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Dörtyol",
-
-    image: "/locations/optimized/11.webp",
-
-    panoramaRotation: [0, Math.PI * 1.55, 0],
-
-    hotspots: [
-
-      { position: { x: 3.8, y: -0.1, z: 0.3 }, label: "", target: 2, type: 'animated-arrow-down' },
-
-      { position: { x: -3.8, y: -0.1, z: -0.3 }, label: "", target: 11, type: 'animated-arrow-down' },
-
-      { position: { x: -0.5, y: -0, z: -3 }, label: "", target: 4, type: 'animated-arrow-down' },
-
-      { position: { x: -0.4, y: -0, z: 4 }, label: "", target: 39, type: 'animated-arrow-down' },
-
-      { position: { x: 1.5, y: -0, z: -3 }, label: "", target: 5, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "C Blok Önü",
-
-    image: "/locations/optimized/12.webp",
-
-    panoramaRotation: [0, Math.PI * 1.26, 0],
-
-    hotspots: [
-
-      { position: { x: 3.8, y: -0.1, z: 0.3 }, label: "", target: 10, type: 'animated-arrow-down' },
-
-      { position: { x: -2.2, y: -0.1, z: -1.5 }, label: "", target: 12, type: 'animated-arrow-right' },
-
-      { position: { x: -1.5, y: 0, z: 2.1 }, label: "", target: 15, type: 'animated-arrow-up' },
-
-      { position: { x: -3.2, y: -0.1, z: -0.5 }, label: "", target: 19, type: 'animated-arrow-down' },
-
-
-
-    ],
-
-  },
-
-  {
-
-    name: "C Blok",
-
-    image: "/locations/optimized/14.webp",
-
-    panoramaRotation: [0, Math.PI * 0.32, 0],
-
-    hotspots: [
-
-      { position: { x: -0.6, y: -0.1, z: 2 }, label: "", target: 11, type: 'animated-arrow-left' },
-
-      { position: { x: -0, y: -0.1, z: -2 }, label: "", target: 13, type: 'animated-arrow-down' },
-
-      { position: { x: 0.6, y: -0.1, z: -4 }, label: "", target: 14, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Bilgisayar Odası",
-
-    image: "/locations/optimized/15.webp",
-
-    panoramaRotation: [0, Math.PI * 1.48, 0],
-
-    hotspots: [
-
-      { position: { x: 2.2, y: -0.1, z: -0.5 }, label: "", target: 12, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Kimya Odası",
-
-    image: "/locations/optimized/16.webp",
-
-    panoramaRotation: [0, Math.PI * 1.05, 0],
-
-    hotspots: [
-
-      { position: { x: 2, y: -0.1, z: 0.4 }, label: "", target: 12, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "A Blok Öğretmen Girişi",
-
-    image: "/locations/optimized/17.webp",
-
-    panoramaRotation: [0, Math.PI * 1.22, 0],
-
-    hotspots: [
-
-      { position: { x: 0.2, y: -0.15, z: -2.3 }, label: "", target: 11, type: 'animated-arrow-down' },
-
-
-
-      { position: { x: 2, y: -0.15, z: 2.1 }, label: "", target: 16, type: 'animated-arrow-down' },
-
-      { position: { x: 0.2, y: -0.05, z: 3.1 }, label: "", target: 17, type: 'animated-arrow-down' },
-
-      { position: { x: 2, y: -0.15, z: 2.1 }, label: "", target: 18, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Brifing Salonu",
-
-    image: "/locations/optimized/18.webp",
-
-    panoramaRotation: [0, Math.PI * 1, 0],
-
-    hotspots: [
-
-      { position: { x: -2, y: -0.25, z: 0.4 }, label: "", target: 15, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Örnek Sınıf",
-
-    image: "/locations/optimized/19.webp",
-
-    panoramaRotation: [0, Math.PI * 1, 0],
-
-    hotspots: [
-
-      { position: { x: -2, y: -0.25, z: 0.7 }, label: "", target: 15, type: 'animated-arrow-right' },
-
-      { position: { x: -2, y: -0.25, z: 1.1 }, label: "", target: 18, type: 'animated-arrow-left' },
-
-    ],
-
-  },
-
-  {
-
-    name: "A Blok Hol",
-
-    image: "/locations/optimized/20.webp",
-
-    panoramaRotation: [0, Math.PI * 1.63, 0],
-
-    hotspots: [
-
-      { position: { x: -0.1, y: -0.05, z: -3.2 }, label: "", target: 17, type: 'animated-arrow-down' },
-
-      { position: { x: 3, y: -0.05, z: 0.1   }, label: "", target: 39, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "20",
-
-    image: "/locations/optimized/21.webp",
-
-    panoramaRotation: [0, Math.PI * 0.95, 0],
-
-    hotspots: [
-
-      { position: { x: 3.5, y: -0.1, z: 0.5 }, label: "", target: 11, type: 'animated-arrow-down' },
-
-      { position: { x: 1.5, y: -0.1, z: -3 }, label: "", target: 21, type: 'animated-arrow-down' },
-
-      { position: { x: -0.5, y: 0.05, z: 3 }, label: "", target: 22, type: 'animated-arrow-up' },
-
-
-
-    ],
-
-  },
-
-  {
-
-    name: "Koru (C Blok Yanı)",
-
-    image: "/locations/optimized/22.webp",
-
-    panoramaRotation: [0, Math.PI * 0.4, 0],
-
-    hotspots: [
-
-      { position: { x: 3, y: -0, z: 0.4 }, label: "", target: 21, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "C Blok Yanı",
-
-    image: "/locations/optimized/23.webp",
-
-    panoramaRotation: [0, Math.PI * 0.75, 0],
-
-    hotspots: [
-
-      { position: { x: -0.2, y: -0.05, z: 3.4 }, label: "", target: 19, type: 'animated-arrow-down' },
-
-      { position: { x: -3.5, y: -0.05, z: -0.8 }, label: "", target: 20, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "BALEV Merdiven Önü",
-
-    image: "/locations/optimized/24.webp",
-
-    panoramaRotation: [0, Math.PI * 0.26, 0],
-
-    hotspots: [
-
-      { position: { x: -0, y: -0.1, z: -3.2 }, label: "", target: 19, type: 'animated-arrow-down' },
-
-      { position: { x: -2.5, y: 0.2, z: 0 }, label: "", target: 23, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "BALEV Merdivenleri",
-
-    image: "/locations/optimized/25.webp",
-
-    panoramaRotation: [0, Math.PI * 0.02, 0],
-
-    hotspots: [
-
-      { position: { x: 3, y: -0.3, z: 0.1 }, label: "", target: 19, type: 'animated-arrow-down' },
-
-      { position: { x: -3, y: 0.14, z: -0.3 }, label: "", target: 24, type: 'animated-arrow-right' },
-
-    ],
-
-  },
-
-  {
-
-    name: "BALEV Yanı",
-
-    image: "/locations/optimized/26.webp",
-
-    panoramaRotation: [0, Math.PI * 0.15, 0],
-
-    hotspots: [
-
-      { position: { x: -3, y: -0.1, z: 1.5 }, label: "", target: 25, type: 'animated-arrow-down' },
-
-      { position: { x: 2.5, y: -0.1, z: 2.5 }, label: "", target: 23, type: 'animated-arrow-right' },
-
-    ],
-
-  },
-
-  {
-
-    name: "BALEV Arkası",
-
-    image: "/locations/optimized/27.webp",
-
-    panoramaRotation: [0, Math.PI * 0.4, 0],
-
-    hotspots: [
-
-      { position: { x: -3.5, y: -0.25 , z: 0 }, label: "", target: 26, type: 'animated-arrow-down' },
-
-      { position: { x: 3, y: 0.1, z: 0 }, label: "", target: 24, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Koru (BALEV Arkası)",
-
-    image: "/locations/optimized/28.webp",
-
-    panoramaRotation: [0, Math.PI * 0.65, 0],
-
-    hotspots: [
-
-      { position: { x: 0.5, y: -0.05, z: 3.2 }, label: "", target: 27, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Koru (Arka Giriş)",
-
-    image: "/locations/optimized/29.webp",
-
-    panoramaRotation: [0, Math.PI * -0.2, 0],
-
-    hotspots: [
-
-      { position: { x: 3, y: -0.05, z: -0.5 }, label: "", target: 28, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Koru (A Blok Arkası)",
-
-    image: "/locations/optimized/30.webp",
-
-    panoramaRotation: [0, Math.PI * -0.25, 0],
-
-    hotspots: [
-
-      { position: { x: -3, y: -0.05, z: 0.7 }, label: "", target: 27, type: 'animated-arrow-down' },
-
-      { position: { x: 2.2, y: -0.1, z: 2.2 }, label: "", target: 29, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Kantin Yanı",
-
-    image: "/locations/optimized/31.webp",
-
-    panoramaRotation: [0, Math.PI * 0.25, 0],
-
-    hotspots: [
-
-      { position: { x: -2, y: -0.05, z: -3 }, label: "", target: 28, type: 'animated-arrow-down' },
-
-      { position: { x: 3, y: -0.1, z: 0.7 }, label: "", target: 30, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "31",
-
-    image: "/locations/optimized/32.webp",
-
-    panoramaRotation: [0, Math.PI * -0, 0],
-
-    hotspots: [
-
-      { position: { x: -3, y: -0.05, z: -1.75 }, label: "", target: 29, type: 'animated-arrow-down' },
-
-      { position: { x: -0.5, y: -0.05, z: 3.5 }, label: "", target: 31, type: 'animated-arrow-down' },
-
-      { position: { x: 2, y: -0.05, z: 2.75 }, label: "", target: 32, type: 'animated-arrow-down' },
-
-      { position: { x: 3, y: -0.05, z: -2.75 }, label: "", target: 38, type: 'animated-arrow-right' },
-
-      { position: { x: 3, y: -0.05, z: -3.5 }, label: "", target: 39, type: 'animated-arrow-left' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Müzik / Resim Atölyeleri",
-
-    image: "/locations/optimized/33.webp",
-
-    panoramaRotation: [0, Math.PI * 1.25, 0],
-
-    hotspots: [
-
-      { position: { x: 0.75, y: -0.05, z: -3.5 }, label: "", target: 30, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Müzik Atölyesi Arkası",
-
-    image: "/locations/optimized/34.webp",
-
-    panoramaRotation: [0, Math.PI * 0, 0],
-
-    hotspots: [
-
-      { position: { x: -1.2, y: -0.05, z: -3 }, label: "", target: 30, type: 'animated-arrow-down' },
-
-      { position: { x: 0.5, y: -0.05, z: 3 }, label: "", target: 33, type: 'animated-arrow-left' },
-
-    ],
-
-  },
-
-  {
-
-    name: "G Blok Arkası",
-
-    image: "/locations/optimized/35.webp",
-
-    panoramaRotation: [0, Math.PI * -0.4, 0],
-
-    hotspots: [
-
-      { position: { x: -3, y: -0.05, z: -2 }, label: "", target: 32, type: 'animated-arrow-right' },
-
-      { position: { x: 2, y: -0.05, z: -3.2 }, label: "", target: 34, type: 'animated-arrow-down' },
-
-      { position: { x: 3.5, y: -0.05, z: -0.85 }, label: "", target: 35, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "G Blok Önü",
-
-    image: "/locations/optimized/36.webp",
-
-    panoramaRotation: [0, Math.PI * 1.6, 0],
-
-    hotspots: [
-
-      { position: { x: -3, y: -0.05, z: 2.5 }, label: "", target: 33, type: 'animated-arrow-down' },
-
-      { position: { x: 1.45, y: -0, z: 3 }, label: "", target: 37, type: 'animated-arrow-up' },
-
-      { position: { x: -2, y: -0, z: -3 }, label: "", target: 38, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "36",
-
-    image: "/locations/optimized/37.webp",
-
-    panoramaRotation: [0, Math.PI * -0.15, 0],
-
-    hotspots: [
-
-      { position: { x: -3, y: -0.05, z: .6 }, label: "", target: 33, type: 'animated-arrow-down' },
-
-      { position: { x: -0.7, y: -0.05, z: -4 }, label: "", target: 36, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Halı Saha",
-
-    image: "/locations/optimized/38.webp",
-
-    panoramaRotation: [0, Math.PI * -0.2, 0],
-
-    hotspots: [
-
-      { position: { x: 1, y: -0.05, z: 3.2 }, label: "", target: 35, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "G Blok",
-
-    image: "/locations/optimized/39.webp",
-
-    panoramaRotation: [0, Math.PI * 0.83, 0],
-
-    hotspots: [
-
-      { position: { x: -0.5, y: -0.05, z: -3 }, label: "", target: 34, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Eski Kantin",
-
-    image: "/locations/optimized/40.webp",
-
-    panoramaRotation: [0, Math.PI * 0.05, 0],
-
-    hotspots: [
-
-      { position: { x: -3.5, y: -0.05, z: 1 }, label: "", target: 30, type: 'animated-arrow-down' },
-
-      { position: { x: -2.8, y: -0, z: -3 }, label: "", target: 39, type: 'animated-arrow-down' },
-
-      { position: { x: 1.8, y: -0.05, z: 3.5 }, label: "", target: 34, type: 'animated-arrow-down' },
-
-      { position: { x: -1, y: -0., z: -4 }, label: "", target: 40, type: 'animated-arrow-up' },
-
-
-
-    ],
-
-  },
-
-  {
-
-    name: "A Blok Önü",
-
-    image: "/locations/optimized/41.webp",
-
-    panoramaRotation: [0, Math.PI * 0.7, 0],
-
-    hotspots: [
-
-      { position: { x: -3, y: -0.05, z: 1.7 }, label: "", target: 30, type: 'animated-arrow-left' },
-
-      { position: { x: -3.5, y: -0.05, z: -1.2 }, label: "", target: 18, type: 'animated-arrow-up' },
-
-      { position: { x: -3, y: -0.1, z: -3 }, label: "", target: 10, type: 'animated-arrow-right' },
-
-      { position: { x: 2.9, y: 0.1, z: 3 }, label: "", target: 38, type: 'animated-arrow-down' },
-
-      { position: { x: 3, y: -0.05, z: -2.5 }, label: "", target: 40, type: 'animated-arrow-down' },
-
-
-
-    ],
-
-  },
-
-  {
-
-    name: "Spor Sahası",
-
-    image: "/locations/optimized/42.webp",
-
-    panoramaRotation: [0, Math.PI * 0.5, 0],
-
-    hotspots: [
-
-      { position: { x: -3.5, y: -0., z: 2 }, label: "", target: 39, type: 'animated-arrow-down' },
-
-      { position: { x: -0, y: -0., z: 3.5 }, label: "", target: 38, type: 'animated-arrow-up' },
-
-      { position: { x: 4, y: -0.05, z: -1 }, label: "", target: 41, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Spor Salonu Önü",
-
-    image: "/locations/optimized/43.webp",
-
-    panoramaRotation: [0, Math.PI * 1.35, 0],
-
-    hotspots: [
-
-      { position: { x: -3.5, y: -0.0, z: .7 }, label: "", target: 40, type: 'animated-arrow-up' },
-
-      { position: { x: -1.5, y: -0.1, z: -3.7 }, label: "", target: 0, type: 'animated-arrow-down' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Tören Alanı",
-
-    image: "/locations/optimized/44.webp",
-
-    panoramaRotation: [0, Math.PI * 0.59, 0],
-
-    hotspots: [
-
-      { position: { x: -0, y: -0.05, z: 3.7 }, label: "", target: 1, type: 'animated-arrow-up' },
-
-    ],
-
-  },
-
-  {
-
-    name: "Konferans Salonu",
-
-    image: "/locations/optimized/45.webp",
-
-    panoramaRotation: [0, Math.PI * 1.4, 0],
-
-    hotspots: [
-
-      { position: { x: -1, y: -0.1, z: -3.5 }, label: "", target: 0, type: 'animated-arrow-right' },
-
-    ],
-
-  },
-
-
-
-
-
+  {
+    name: "Giriş",
+    image: "/locations/optimized/1.webp",
+    panoramaRotation: [0, 0, 0],
+    hotspots: [
+      { position: { x: -3.5, y: -0.1, z: -0.25 }, label: "", target: 1, type: 'animated-arrow-down' },
+      { position: { x: 1.5, y: -0.05, z: 4 }, label: "", target: 41, type: 'animated-arrow-down' },
+      { position: { x: -1.5, y: -0.05, z: 4 }, label: "", target: 43, type: 'animated-arrow-right' },
+      // { position: { x: -1, y: 0, z: 1.5 }, label: "Konferans Salonu", info: { title: "Konferans Salonu", description: "Okulumuzun Konferans Salonu. Geniş ve ferah!" }, type: 'info' },
+    ],
+    initialCameraTarget: [-1, 0, 1], // Default camera target
+  },
+  {
+    name: "2",
+    image: "/locations/optimized/2.webp",
+    panoramaRotation: [0, 0, 0],
+    hotspots: [
+      { position: { x: 3.5, y: -0.1, z: 0.2 }, label: "", target: 0, type: 'animated-arrow-down' },
+      { position: { x: -0.5, y: -0.1, z: -4 }, label: "", target: 42, type: 'animated-arrow-down' },
+      { position: { x: -4.5, y: -0.1, z: -0.4 }, label: "", target: 2, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "3",
+    image: "/locations/optimized/3.webp",
+    panoramaRotation: [0, Math.PI * 1.1, 0],
+    hotspots: [
+      { position: { x: 4, y: -0.05, z: 0.3 }, label: "", target: 1, type: 'animated-arrow-down' },
+      { position: { x: 0, y: -0.1, z: -4 }, label: "", target: 3, type: 'animated-arrow-down' },
+      { position: { x: -2.5, y: -0.1, z: -2.5 }, label: "", target: 5, type: 'animated-arrow-down' },
+      { position: { x: -3, y: -0.1, z: -0.2 }, label: "", target: 10, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Anaokulu Arkası",
+    image: "/locations/optimized/4.webp",
+    panoramaRotation: [0, Math.PI * 0.8, 0],
+    hotspots: [
+      { position: { x: 0, y: -0, z: 4 }, label: "", target: 2, type: 'animated-arrow-down' },
+      { position: { x: -2.5, y: -0, z: 3.6 }, label: "", target: 5, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "B Blok ile C Blok Arası",
+    image: "/locations/optimized/5.webp",
+    panoramaRotation: [0, Math.PI * 0.7, 0],
+    hotspots: [
+      { position: { x: 0.4, y: -0, z: 3 }, label: "", target: 10, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "B Blok Önü",
+    image: "/locations/optimized/6.webp",
+    panoramaRotation: [0, Math.PI * 0.3, 0],
+    hotspots: [
+      { position: { x: 2.5, y: -0.1, z: 2.6 }, label: "", target: 2, type: 'animated-arrow-down' },
+      { position: { x: 2, y: -0.1, z: -3 }, label: "", target: 3, type: 'animated-arrow-down' },
+      { position: { x: 0.5, y: -0.1, z: -2.4 }, label: "", target: 6, type: 'animated-arrow-down' },
+      { position: { x: -2, y: -0, z: 2.4 }, label: "", target: 10, type: 'animated-arrow-down' },
+      { position: { x: -2.2, y: 0, z: -3 }, label: "", target: 4, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "B Blok Giriş",
+    image: "/locations/optimized/7.webp",
+    panoramaRotation: [0, Math.PI * 1, 0],
+    hotspots: [
+      { position: { x: -0.5, y: -0.1, z: 3.2 }, label: "", target: 5, type: 'animated-arrow-down' },
+      { position: { x: 0.65, y: -0.1, z: -4 }, label: "", target: 7, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "B Blok Koridor",
+    image: "/locations/optimized/8.webp",
+    panoramaRotation: [0, Math.PI * 0.8, 0],
+    hotspots: [
+      { position: { x: -0.6, y: -0.1, z: 3.8 }, label: "", target: 6, type: 'animated-arrow-down' },
+      { position: { x: -2.3, y: -0.1, z: 1 }, label: "", target: 8, type: 'animated-arrow-down' },
+      { position: { x: -0.2, y: -0.1, z: -2.9 }, label: "", target: 9, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Matematik ve Bilim Atölyesi",
+    image: "/locations/optimized/9.webp",
+    panoramaRotation: [0, Math.PI * 0.3, 0],
+    hotspots: [
+      { position: { x: 2.5, y: -0.1, z: -2.5 }, label: "", target: 7, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Robotik Odası",
+    image: "/locations/optimized/10.webp",
+    panoramaRotation: [0, Math.PI * 0.3, 0],
+    hotspots: [
+      { position: { x: -2, y: -0.1, z: -2.8 }, label: "", target: 7, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Dörtyol",
+    image: "/locations/optimized/11.webp",
+    panoramaRotation: [0, Math.PI * 1.55, 0],
+    hotspots: [
+      { position: { x: 3.8, y: -0.1, z: 0.3 }, label: "", target: 2, type: 'animated-arrow-down' },
+      { position: { x: -3.8, y: -0.1, z: -0.3 }, label: "", target: 11, type: 'animated-arrow-down' },
+      { position: { x: -0.5, y: -0, z: -3 }, label: "", target: 4, type: 'animated-arrow-down' },
+      { position: { x: -0.4, y: -0, z: 4 }, label: "", target: 39, type: 'animated-arrow-down' },
+      { position: { x: 1.5, y: -0, z: -3 }, label: "", target: 5, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "C Blok Önü",
+    image: "/locations/optimized/12.webp",
+    panoramaRotation: [0, Math.PI * 1.26, 0],
+    hotspots: [
+      { position: { x: 3.8, y: -0.1, z: 0.3 }, label: "", target: 10, type: 'animated-arrow-down' },
+      { position: { x: -2.2, y: -0.1, z: -1.5 }, label: "", target: 12, type: 'animated-arrow-right' },
+      { position: { x: -1.5, y: 0, z: 2.1 }, label: "", target: 15, type: 'animated-arrow-up' },
+      { position: { x: -3.2, y: -0.1, z: -0.5 }, label: "", target: 19, type: 'animated-arrow-down' },
+
+    ],
+  },
+  {
+    name: "C Blok",
+    image: "/locations/optimized/14.webp",
+    panoramaRotation: [0, Math.PI * 0.32, 0],
+    hotspots: [
+      { position: { x: -0.6, y: -0.1, z: 2 }, label: "", target: 11, type: 'animated-arrow-left' },
+      { position: { x: -0, y: -0.1, z: -2 }, label: "", target: 13, type: 'animated-arrow-down' },
+      { position: { x: 0.6, y: -0.1, z: -4 }, label: "", target: 14, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Bilgisayar Odası",
+    image: "/locations/optimized/15.webp",
+    panoramaRotation: [0, Math.PI * 1.48, 0],
+    hotspots: [
+      { position: { x: 2.2, y: -0.1, z: -0.5 }, label: "", target: 12, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Kimya Odası",
+    image: "/locations/optimized/16.webp",
+    panoramaRotation: [0, Math.PI * 1.05, 0],
+    hotspots: [
+      { position: { x: 2, y: -0.1, z: 0.4 }, label: "", target: 12, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "A Blok Öğretmen Girişi",
+    image: "/locations/optimized/17.webp",
+    panoramaRotation: [0, Math.PI * 1.22, 0],
+    hotspots: [
+      { position: { x: 0.2, y: -0.15, z: -2.3 }, label: "", target: 11, type: 'animated-arrow-down' },
+
+      { position: { x: 2, y: -0.15, z: 2.1 }, label: "", target: 16, type: 'animated-arrow-down' },
+      { position: { x: 0.2, y: -0.05, z: 3.1 }, label: "", target: 17, type: 'animated-arrow-down' },
+      { position: { x: 2, y: -0.15, z: 2.1 }, label: "", target: 18, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Brifing Salonu",
+    image: "/locations/optimized/18.webp",
+    panoramaRotation: [0, Math.PI * 1, 0],
+    hotspots: [
+      { position: { x: -2, y: -0.25, z: 0.4 }, label: "", target: 15, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Örnek Sınıf",
+    image: "/locations/optimized/19.webp",
+    panoramaRotation: [0, Math.PI * 1, 0],
+    hotspots: [
+      { position: { x: -2, y: -0.25, z: 0.7 }, label: "", target: 15, type: 'animated-arrow-right' },
+      { position: { x: -2, y: -0.25, z: 1.1 }, label: "", target: 18, type: 'animated-arrow-left' },
+    ],
+  },
+  {
+    name: "A Blok Hol",
+    image: "/locations/optimized/20.webp",
+    panoramaRotation: [0, Math.PI * 1.63, 0],
+    hotspots: [
+      { position: { x: -0.1, y: -0.05, z: -3.2 }, label: "", target: 17, type: 'animated-arrow-down' },
+      { position: { x: 3, y: -0.05, z: 0.1 }, label: "", target: 39, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "20",
+    image: "/locations/optimized/21.webp",
+    panoramaRotation: [0, Math.PI * 0.95, 0],
+    hotspots: [
+      { position: { x: 3.5, y: -0.1, z: 0.5 }, label: "", target: 11, type: 'animated-arrow-down' },
+      { position: { x: 1.5, y: -0.1, z: -3 }, label: "", target: 21, type: 'animated-arrow-down' },
+      { position: { x: -0.5, y: 0.05, z: 3 }, label: "", target: 22, type: 'animated-arrow-up' },
+
+    ],
+  },
+  {
+    name: "Koru (C Blok Yanı)",
+    image: "/locations/optimized/22.webp",
+    panoramaRotation: [0, Math.PI * 0.4, 0],
+    hotspots: [
+      { position: { x: 3, y: -0, z: 0.4 }, label: "", target: 21, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "C Blok Yanı",
+    image: "/locations/optimized/23.webp",
+    panoramaRotation: [0, Math.PI * 0.75, 0],
+    hotspots: [
+      { position: { x: -0.2, y: -0.05, z: 3.4 }, label: "", target: 19, type: 'animated-arrow-down' },
+      { position: { x: -3.5, y: -0.05, z: -0.8 }, label: "", target: 20, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "BALEV Merdiven Önü",
+    image: "/locations/optimized/24.webp",
+    panoramaRotation: [0, Math.PI * 0.26, 0],
+    hotspots: [
+      { position: { x: -0, y: -0.1, z: -3.2 }, label: "", target: 19, type: 'animated-arrow-down' },
+      { position: { x: -2.5, y: 0.2, z: 0 }, label: "", target: 23, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "BALEV Merdivenleri",
+    image: "/locations/optimized/25.webp",
+    panoramaRotation: [0, Math.PI * 0.02, 0],
+    hotspots: [
+      { position: { x: 3, y: -0.3, z: 0.1 }, label: "", target: 19, type: 'animated-arrow-down' },
+      { position: { x: -3, y: 0.14, z: -0.3 }, label: "", target: 24, type: 'animated-arrow-right' },
+    ],
+  },
+  {
+    name: "BALEV Yanı",
+    image: "/locations/optimized/26.webp",
+    panoramaRotation: [0, Math.PI * 0.15, 0],
+    hotspots: [
+      { position: { x: -3, y: -0.1, z: 1.5 }, label: "", target: 25, type: 'animated-arrow-down' },
+      { position: { x: 2.5, y: -0.1, z: 2.5 }, label: "", target: 23, type: 'animated-arrow-right' },
+    ],
+  },
+  {
+    name: "BALEV Arkası",
+    image: "/locations/optimized/27.webp",
+    panoramaRotation: [0, Math.PI * 0.4, 0],
+    hotspots: [
+      { position: { x: -3.5, y: -0.25, z: 0 }, label: "", target: 26, type: 'animated-arrow-down' },
+      { position: { x: 3, y: 0.1, z: 0 }, label: "", target: 24, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Koru (BALEV Arkası)",
+    image: "/locations/optimized/28.webp",
+    panoramaRotation: [0, Math.PI * 0.65, 0],
+    hotspots: [
+      { position: { x: 0.5, y: -0.05, z: 3.2 }, label: "", target: 27, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Koru (Arka Giriş)",
+    image: "/locations/optimized/29.webp",
+    panoramaRotation: [0, Math.PI * -0.2, 0],
+    hotspots: [
+      { position: { x: 3, y: -0.05, z: -0.5 }, label: "", target: 28, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Koru (A Blok Arkası)",
+    image: "/locations/optimized/30.webp",
+    panoramaRotation: [0, Math.PI * -0.25, 0],
+    hotspots: [
+      { position: { x: -3, y: -0.05, z: 0.7 }, label: "", target: 27, type: 'animated-arrow-down' },
+      { position: { x: 2.2, y: -0.1, z: 2.2 }, label: "", target: 29, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Kantin Yanı",
+    image: "/locations/optimized/31.webp",
+    panoramaRotation: [0, Math.PI * 0.25, 0],
+    hotspots: [
+      { position: { x: -2, y: -0.05, z: -3 }, label: "", target: 28, type: 'animated-arrow-down' },
+      { position: { x: 3, y: -0.1, z: 0.7 }, label: "", target: 30, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "31",
+    image: "/locations/optimized/32.webp",
+    panoramaRotation: [0, Math.PI * -0, 0],
+    hotspots: [
+      { position: { x: -3, y: -0.05, z: -1.75 }, label: "", target: 29, type: 'animated-arrow-down' },
+      { position: { x: -0.5, y: -0.05, z: 3.5 }, label: "", target: 31, type: 'animated-arrow-down' },
+      { position: { x: 2, y: -0.05, z: 2.75 }, label: "", target: 32, type: 'animated-arrow-down' },
+      { position: { x: 3, y: -0.05, z: -2.75 }, label: "", target: 38, type: 'animated-arrow-right' },
+      { position: { x: 3, y: -0.05, z: -3.5 }, label: "", target: 39, type: 'animated-arrow-left' },
+    ],
+  },
+  {
+    name: "Müzik / Resim Atölyeleri",
+    image: "/locations/optimized/33.webp",
+    panoramaRotation: [0, Math.PI * 1.25, 0],
+    hotspots: [
+      { position: { x: 0.75, y: -0.05, z: -3.5 }, label: "", target: 30, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Müzik Atölyesi Arkası",
+    image: "/locations/optimized/34.webp",
+    panoramaRotation: [0, Math.PI * 0, 0],
+    hotspots: [
+      { position: { x: -1.2, y: -0.05, z: -3 }, label: "", target: 30, type: 'animated-arrow-down' },
+      { position: { x: 0.5, y: -0.05, z: 3 }, label: "", target: 33, type: 'animated-arrow-left' },
+    ],
+  },
+  {
+    name: "G Blok Arkası",
+    image: "/locations/optimized/35.webp",
+    panoramaRotation: [0, Math.PI * -0.4, 0],
+    hotspots: [
+      { position: { x: -3, y: -0.05, z: -2 }, label: "", target: 32, type: 'animated-arrow-right' },
+      { position: { x: 2, y: -0.05, z: -3.2 }, label: "", target: 34, type: 'animated-arrow-down' },
+      { position: { x: 3.5, y: -0.05, z: -0.85 }, label: "", target: 35, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "G Blok Önü",
+    image: "/locations/optimized/36.webp",
+    panoramaRotation: [0, Math.PI * 1.6, 0],
+    hotspots: [
+      { position: { x: -3, y: -0.05, z: 2.5 }, label: "", target: 33, type: 'animated-arrow-down' },
+      { position: { x: 1.45, y: -0, z: 3 }, label: "", target: 37, type: 'animated-arrow-up' },
+      { position: { x: -2, y: -0, z: -3 }, label: "", target: 38, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "36",
+    image: "/locations/optimized/37.webp",
+    panoramaRotation: [0, Math.PI * -0.15, 0],
+    hotspots: [
+      { position: { x: -3, y: -0.05, z: .6 }, label: "", target: 33, type: 'animated-arrow-down' },
+      { position: { x: -0.7, y: -0.05, z: -4 }, label: "", target: 36, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Halı Saha",
+    image: "/locations/optimized/38.webp",
+    panoramaRotation: [0, Math.PI * -0.2, 0],
+    hotspots: [
+      { position: { x: 1, y: -0.05, z: 3.2 }, label: "", target: 35, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "G Blok",
+    image: "/locations/optimized/39.webp",
+    panoramaRotation: [0, Math.PI * 0.83, 0],
+    hotspots: [
+      { position: { x: -0.5, y: -0.05, z: -3 }, label: "", target: 34, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Eski Kantin",
+    image: "/locations/optimized/40.webp",
+    panoramaRotation: [0, Math.PI * 0.05, 0],
+    hotspots: [
+      { position: { x: -3.5, y: -0.05, z: 1 }, label: "", target: 30, type: 'animated-arrow-down' },
+      { position: { x: -2.8, y: -0, z: -3 }, label: "", target: 39, type: 'animated-arrow-down' },
+      { position: { x: 1.8, y: -0.05, z: 3.5 }, label: "", target: 34, type: 'animated-arrow-down' },
+      { position: { x: -1, y: -0., z: -4 }, label: "", target: 40, type: 'animated-arrow-up' },
+
+    ],
+  },
+  {
+    name: "A Blok Önü",
+    image: "/locations/optimized/41.webp",
+    panoramaRotation: [0, Math.PI * 0.7, 0],
+    hotspots: [
+      { position: { x: -3, y: -0.05, z: 1.7 }, label: "", target: 30, type: 'animated-arrow-left' },
+      { position: { x: -3.5, y: -0.05, z: -1.2 }, label: "", target: 18, type: 'animated-arrow-up' },
+      { position: { x: -3, y: -0.1, z: -3 }, label: "", target: 10, type: 'animated-arrow-right' },
+      { position: { x: 2.9, y: 0.1, z: 3 }, label: "", target: 38, type: 'animated-arrow-down' },
+      { position: { x: 3, y: -0.05, z: -2.5 }, label: "", target: 40, type: 'animated-arrow-down' },
+
+    ],
+  },
+  {
+    name: "Spor Sahası",
+    image: "/locations/optimized/42.webp",
+    panoramaRotation: [0, Math.PI * 0.5, 0],
+    hotspots: [
+      { position: { x: -3.5, y: -0., z: 2 }, label: "", target: 39, type: 'animated-arrow-down' },
+      { position: { x: -0, y: -0., z: 3.5 }, label: "", target: 38, type: 'animated-arrow-up' },
+      { position: { x: 4, y: -0.05, z: -1 }, label: "", target: 41, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Spor Salonu Önü",
+    image: "/locations/optimized/43.webp",
+    panoramaRotation: [0, Math.PI * 1.35, 0],
+    hotspots: [
+      { position: { x: -3.5, y: -0.0, z: .7 }, label: "", target: 40, type: 'animated-arrow-up' },
+      { position: { x: -1.5, y: -0.1, z: -3.7 }, label: "", target: 0, type: 'animated-arrow-down' },
+    ],
+  },
+  {
+    name: "Tören Alanı",
+    image: "/locations/optimized/44.webp",
+    panoramaRotation: [0, Math.PI * 0.59, 0],
+    hotspots: [
+      { position: { x: -0, y: -0.05, z: 3.7 }, label: "", target: 1, type: 'animated-arrow-up' },
+    ],
+  },
+  {
+    name: "Konferans Salonu",
+    image: "/locations/optimized/45.webp",
+    panoramaRotation: [0, Math.PI * 1.4, 0],
+    hotspots: [
+      { position: { x: -1, y: -0.1, z: -3.5 }, label: "", target: 0, type: 'animated-arrow-right' },
+    ],
+  },
 ];
 
 const GLOBAL_SIDEBAR_LOCATION_INDICES = [
@@ -1230,9 +808,7 @@ function WelcomeModal({ onStartTour }: WelcomeModalProps) {
           <h3 className="text-xl font-bold text-red-700 mt-6 mb-2">Bu Sanal Turu Hazırlamada Yardımcı Olanlar</h3>
           <ul className="list-disc list-inside space-y-1">
             <li><strong>Yazılım:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Emre Bozkurt</a></li>
-            <li><strong>Nigger:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Canberk Özçağan</a></li>
 
-            <li><strong>   :</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Devran Ersönmez</a></li>
             <li><strong>Proje Görevlisi:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Ali Başar Muslu</a></li>
 
           </ul>
