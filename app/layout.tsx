@@ -26,11 +26,11 @@ export const metadata: Metadata = {
   authors: [{ name: 'Bornova Anadolu Lisesi' }],
   creator: 'Bornova Anadolu Lisesi',
   publisher: 'Bornova Anadolu Lisesi',
-  metadataBase: new URL('https://izmirbal.meb.k12.tr'), // Okulun resmi sitesi URL'si
+  metadataBase: new URL('https://www.balsanalgezi.com'), // Okulun resmi sitesi URL'si
   openGraph: {
     title: 'Bornova Anadolu Lisesi (BAL) Sanal Gezi',
     description: 'Bornova Anadolu Lisesi kampüsünü 360° sanal tur ile keşfedin. BAL, İzmir\'de üç dilde eğitim veren köklü bir Anadolu Lisesidir.',
-    url: 'https://izmirbal.meb.k12.tr', // Sanal turun yayınlanacağı URL
+    url: 'https://www.balsanalgezi.com', // Sanal turun yayınlanacağı URL
     siteName: 'Bornova Anadolu Lisesi Sanal Tur',
     images: [
       {
