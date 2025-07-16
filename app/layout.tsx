@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: 'Bornova Anadolu Lisesi Sanal Tur',
     images: [
       {
-        url: '/logo.png', // Logo dosyanızın yolu
+        url: '/opengraph-image.jpg', // Logo dosyanızın yolu
         width: 512, // Logonuza uygun genişlik
         height: 512, // Logonuza uygun yükseklik
         alt: 'Bornova Anadolu Lisesi Logosu',
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image', // Büyük görsel içeren kart tipi
     title: 'Bornova Anadolu Lisesi (BAL) Sanal Gezi',
     description: 'Bornova Anadolu Lisesi kampüsünü 360° sanal tur ile keşfedin. BAL, İzmir\'de üç dilde eğitim veren köklü bir Anadolu Lisesidir.',
-    images: ['/logo.png'], // Twitter kartında kullanılacak görsel
-    creator: '@BALresmi', // Eğer okulun resmi bir Twitter hesabı varsa buraya eklenebilir
+    images: ['/twitter-image.jpg'], // Twitter kartında kullanılacak görsel
+    creator: '@izmirbornovaanadolulisesi', // Eğer okulun resmi bir Twitter hesabı varsa buraya eklenebilir
   },
   robots: {
     index: true,
@@ -73,6 +73,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr">
+      <head>
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      </head>
       <body className={`${inter.className} bg-gray-900`}>
         {children}
       </body>

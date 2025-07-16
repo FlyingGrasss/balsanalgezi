@@ -1,0 +1,33 @@
+{
+  "name": "BAL Sanal Gezi",
+  "short_name": "BAL Sanal Tur",
+  "description": "Bornova Anadolu Lisesi kampüsünü 360° sanal tur ile keşfedin. BAL, İzmir'de üç dilde eğitim veren köklü bir Anadolu Lisesidir.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#9f0712",
+  "theme_color": "#9f0712",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
