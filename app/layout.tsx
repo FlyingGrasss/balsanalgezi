@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://www.balsanalgezi.com'), // Okulun resmi sitesi URL'si
   openGraph: {
     title: 'Bornova Anadolu Lisesi (BAL) Sanal Gezi',
-    description: 'Bornova Anadolu Lisesi kampüsünü 360° sanal tur ile keşfedin. BAL, İzmir\'de üç dilde eğitim veren köklü bir Anadolu Lisesidir.',
+    description: 'Bornova Anadolu Lisesi kampüsünü 360° sanal tur ile keşfedin.',
     url: 'https://www.balsanalgezi.com', // Sanal turun yayınlanacağı URL
     siteName: 'Bornova Anadolu Lisesi Sanal Tur',
     images: [
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image', // Büyük görsel içeren kart tipi
     title: 'Bornova Anadolu Lisesi (BAL) Sanal Gezi',
-    description: 'Bornova Anadolu Lisesi kampüsünü 360° sanal tur ile keşfedin. BAL, İzmir\'de üç dilde eğitim veren köklü bir Anadolu Lisesidir.',
+    description: 'Bornova Anadolu Lisesi kampüsünü 360° sanal tur ile keşfedin.',
     images: ['/twitter-image.jpg'], // Twitter kartında kullanılacak görsel
     creator: '@izmirbornovaanadolulisesi', // Eğer okulun resmi bir Twitter hesabı varsa buraya eklenebilir
   },
