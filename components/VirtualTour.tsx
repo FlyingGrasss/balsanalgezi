@@ -808,10 +808,18 @@ function WelcomeModal({ onStartTour }: WelcomeModalProps) {
 
           <h3 className="text-xl font-bold text-red-700 mt-6 mb-2">Bu Sanal Turu Hazırlamada Yardımcı Olanlar</h3>
           <ul className="list-disc list-inside space-y-1">
-            <li><strong>Yazılım:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Emre Bozkurt</a></li>
-            <li><strong>Yazılım Yardımcısı:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Canberk Özçağan</a></li>
+            <li><strong>Yazılım:</strong> <a href="https://www.instagram.com/emre.bozqurt/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Emre Bozkurt</a></li>
+            <li><strong>Yazılım Yardımcısı:</strong> <a href="https://www.instagram.com/_canberk_q/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Canberk Özçağan</a></li>
 
-            <li><strong>Proje Görevlisi:</strong> <a href="" /* target="_blank" */ rel="noopener noreferrer" className="text-blue-600 hover:underline">Ali Başar Muslu</a></li>
+            <li><strong>Proje Görevlisi:</strong> <a href="https://www.instagram.com/basar.muslu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Ali Başar Muslu</a></li>
+
+          </ul>
+          <h3 className="text-xl font-bold text-red-700 mt-6 mb-2">İletişim</h3>
+          <ul className="list-disc list-inside space-y-1">
+            <li><strong>Yazılım:</strong> <a href="mailto:info@emreb.com.tr" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">info@emreb.com.tr</a></li>
+            <li><strong>Yazılım Yardımcısı:</strong> <a href="mailto:canberkozcagan@gmail.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">canberkozcagan@gmail.com</a></li>
+
+            <li><strong>Proje Görevlisi:</strong> <a href="mailto:abasarmuslu@gmail.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">abasarmuslu@gmail.com</a></li>
 
           </ul>
 
