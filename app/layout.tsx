@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Bornova Anadolu Lisesi (BAL) Sanal Gezi', // Daha açıklayıcı başlık
-  description: 'Bornova Anadolu Lisesi kampüsünü 360° sanal tur ile keşfedin. BAL, İzmir\'de üç dilde eğitim veren köklü bir Anadolu Lisesidir.', // Daha açıklayıcı açıklama
+  description: 'Bornova Anadolu Lisesi kampüsünü 360° sanal tur ile keşfedin.', // Daha açıklayıcı açıklama
   keywords: [
     'Bornova Anadolu Lisesi',
     'BAL',
