@@ -1041,7 +1041,7 @@ export default function VirtualTour() {
               maxDistance={1000}
               target={[0, 0, 0]}
               enableZoom={false}
-              rotateSpeed={-1}
+              rotateSpeed={-0.8}
             />
           </Canvas>
         </>
