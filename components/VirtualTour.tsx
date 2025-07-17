@@ -718,7 +718,7 @@ function Sidebar({ locations, currentLocation, setCurrentLocation, isOpen, onClo
           ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="p-4 flex justify-between items-center border-b border-gray-200">
-          <h2 className="text-xl font-bold text-gray-800">Yerler</h2>
+          <h2 className="text-xl font-bold  select-none text-gray-800">Yerler</h2>
           <button
             onClick={onClose}
             className="p-2 cursor-pointer rounded-full hover:bg-gray-100 transition-colors"
@@ -736,7 +736,7 @@ function Sidebar({ locations, currentLocation, setCurrentLocation, isOpen, onClo
             <button
               key={locations.indexOf(location)} // Use original index for key
               onClick={() => handleLocationClick(locations.indexOf(location))} // Pass original index
-              className={`block w-full cursor-pointer text-left px-4 py-2 rounded-lg text-sm font-medium transition-colors
+              className={`block w-full cursor-pointer select-none text-left px-4 py-2 rounded-lg text-sm font-medium transition-colors
                 ${currentLocation === locations.indexOf(location)
                   ? 'bg-blue-600 text-white shadow-md'
                   : 'text-gray-800 hover:bg-blue-50'
@@ -770,6 +770,18 @@ function WelcomeModal({ onStartTour }: WelcomeModalProps) {
         </div>
 
         <div className="text-left text-gray-800 space-y-4 mb-8 flex-grow overflow-y-auto pr-2"> {/* Added flex-grow and overflow-y-auto for content if it exceeds height */}
+          <h2 className="text-2xl font-bold text-red-700 mb-2">Bu Proje Hakkında</h2>
+
+
+          <p>
+            Bu sanal tur, Bornova Anadolu Lisesi'nin (BAL) tarihi ve kültürel zenginliğini keşfetmenizi sağlamak amacıyla hazırlanmıştır. Okulumuzun her köşesini sanal olarak gezebilir, tarihçemizi öğrenebilir ve okulun sunduğu imkanları keşfedebilirsiniz.
+          </p>
+
+
+
+
+
+
           <h2 className="text-2xl font-bold text-red-700 mb-2">Okulumuz Hakkında</h2>
           <p>
             Bornova Anadolu Lisesi (BAL), Bornova, İzmir'de bulunan, üç dil eğitim yapan bir anadolu lisesidir.
@@ -1041,7 +1053,7 @@ export default function VirtualTour() {
               maxDistance={1000}
               target={[0, 0, 0]}
               enableZoom={false}
-              rotateSpeed={-0.8}
+              rotateSpeed={-0.7}
             />
           </Canvas>
         </>
