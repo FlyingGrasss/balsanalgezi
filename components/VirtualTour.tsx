@@ -757,83 +757,177 @@ interface WelcomeModalProps {
   onStartTour: () => void;
 }
 
+// Assuming WelcomeModalProps and other types are defined elsewhere or not strictly needed for this component example
+interface WelcomeModalProps {
+  onStartTour: () => void;
+}
+
 function WelcomeModal({ onStartTour }: WelcomeModalProps) {
+  // State to manage which accordion sections are open
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    'Bu Proje Hakkında': false,
+    'Okulumuz Hakkında': false,
+    'Tarihçesi': false,
+    'Bu Sanal Turu Hazırlayanlar': false,
+    'İletişim': false,
+  });
+
+  // Function to toggle the open/close state of an accordion section
+  const toggleSection = (sectionName: string) => {
+    setOpenSections(prev => ({
+      ...prev,
+      [sectionName]: !prev[sectionName],
+    }));
+  };
+
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-red-800 to-red-950 flex flex-col items-center z-[100] overflow-y-auto"> {/* Changed to flex-col and items-center, removed justify-center */}
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 max-sm:p-4 text-center transform scale-95 opacity-0 mt-0 animate-scaleIn flex flex-col flex-grow"> {/* Added flex-grow to allow content to take available space */}
-        <div className="flex-shrink-0"> {/* Top content, won't shrink */}
-          <img src="/logo.png" alt="Bornova Anadolu Lisesi Logo" className="mx-auto mb-6 w-32 h-32 object-contain" /> {/* School Logo */}
+    <div className="fixed inset-0 bg-gradient-to-br from-red-800 to-red-950 flex flex-col items-center z-[100] overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 max-sm:p-4 text-center transform scale-95 opacity-0 mt-0 animate-scaleIn flex flex-col flex-grow">
+        <div className="flex-shrink-0">
+          <img src="/logo.png" alt="Bornova Anadolu Lisesi Logo" className="mx-auto mb-6 w-32 h-32 object-contain" />
           <h1 className="text-4xl max-sm:text-2xl font-extrabold text-gray-900 mb-4 drop-shadow-md">
             Bornova Anadolu Lisesi (BAL) Sanal Turuna Hoş Geldiniz!
           </h1>
-
         </div>
 
-        <div className="text-left text-gray-800 space-y-4 mb-8 flex-grow overflow-y-auto pr-2"> {/* Added flex-grow and overflow-y-auto for content if it exceeds height */}
-          <h2 className="text-2xl font-bold text-red-700 mb-2">Bu Proje Hakkında</h2>
+        {/* Main content area, now containing accordion items */}
+        <div className="text-left text-gray-800 space-y-2 mb-8 flex-grow overflow-y-auto pr-2"> {/* space-y adjusted for accordion items */}
 
+          {/* Accordion Item for "Bu Proje Hakkında" */}
+          <AccordionItem
+            title="Bu Proje Hakkında"
+            isOpen={openSections['Bu Proje Hakkında']}
+            onToggle={() => toggleSection('Bu Proje Hakkında')}
+          >
+            <div className="space-y-4"> {/* Added space-y-4 for consistent spacing within expanded content */}
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Proje Adı:</h3>
+              <p>BAL360: Türkiye'de İlk Lise Düzeyinde Sanal Tur Kampüs Tanıtım Projesi</p>
 
-          <p>
-            Bu sanal tur, Bornova Anadolu Lisesi'nin (BAL) tarihi ve kültürel zenginliğini keşfetmenizi sağlamak amacıyla hazırlanmıştır. Okulumuzun her köşesini sanal olarak gezebilir, tarihçemizi öğrenebilir ve okulun sunduğu imkanları keşfedebilirsiniz.
-          </p>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Proje Ekibi:</h3>
+              <ul className="list-disc list-inside space-y-1">
+                <li><strong>Proje Yürütücüsü:</strong> Ali Başar Muslu (10H)</li>
+                <li><strong>Proje Asistanları:</strong>  Emre Bozkurt (10C), Canberk Özçağan (10C), Selen Can (10A), Doruk Munzur Tulga (10C)</li>
+                <li><strong>Ekip Üyeleri:</strong> Devran Ersönmez (10H), Barlas Ardıç (10C), Efkan Şenol (10H)</li>
+                <li><strong>Danışman Akademisyenler:</strong> Prof. Dr. Vahap TECİM (Dokuz Eylül Üniversitesi), Yunus Al (Bornova Anadolu Lisesi Matematik Öğretmeni)</li>
+              </ul>
 
+              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">1. Proje Amacı ve Hedefi</h3>
+              <p>BAL360 Projesi, Bornova Anadolu Lisesi (BAL) kampüsünü sanal tur teknolojisiyle tanıtmayı amaçlar. Hedefimiz, lise tercihi yapacak öğrencilerin okulun fiziksel, sosyal ve akademik ortamını 360° fotoğraf tabanlı bir sanal deneyimle uzaktan keşfetmelerini sağlamaktır. Bu sayede, kampüsü fiziksel olarak ziyaret edemeyen aday öğrenciler ve veliler, okul hakkında daha bilinçli karar verebileceklerdir.</p>
 
+              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">2. Hedef Kitle</h3>
+              <ul className="list-disc list-inside space-y-1">
+                <li>LGS sonrası tercih yapacak 8. sınıf öğrencileri ve velileri</li>
+                <li>Rehber öğretmenler</li>
+                <li>Milli Eğitim Bakanlığı'na bağlı okul tanıtım birimleri</li>
+                <li>Eğitim teknolojileriyle ilgilenen kamu ve özel sektör temsilcileri</li>
+              </ul>
 
+              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">3. Projenin Yenilikçi Yönü</h3>
+              <ul className="list-disc list-inside space-y-1">
+                <li>Türkiye'de lise düzeyinde, tamamı öğrenci üretimi olan ve herhangi bir ücretli yazılım kullanılmadan geliştirilen ilk sanal kampüs tanıtımıdır.</li>
+                <li>360° fotoğraf entegrasyonuyla eğitimde dijitalleşmeyi destekleyen özgün bir içerik sunar.</li>
+                <li>Web tabanlı yapısıyla tüm Türkiye'den öğrencilere uzaktan erişim imkanı sağlar.</li>
+              </ul>
 
+              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">4. Teknik Açıklama ve Yöntem</h3>
+              <p>Projede 360° fotoğraf çekimleri için Insta360 kamera ekipmanları kullanılmıştır. Okulun tüm bölümleri (derslikler, laboratuvarlar, spor salonu, bahçe ve sosyal alanlar) çekilerek sanal bir rota oluşturulmuştur. Hazırlanan 360° fotoğraflar, özel bir web uygulaması aracılığıyla interaktif bir sanal tur deneyimine dönüştürülmüştür. Bu uygulama, kullanıcıların bilgisayar veya telefonları üzerinden okulun farklı alanlarını 360 derece görüntüleyebilmelerini sağlar. Kullanıcılar, görüntüler içinde sürükleyerek etrafa bakabilir ve yerleştirilmiş etkileşimli noktalar (hotspotlar) aracılığıyla farklı konumlara geçiş yapabilirler. Web sitesi, kullanıcı dostu arayüzle hem Türkçe hem İngilizce olarak yayınlanacaktır.</p>
 
+              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">5. Projenin Katma Değeri ve Toplumsal Etkisi</h3>
+              <ul className="list-disc list-inside space-y-1">
+                <li><strong>Eğitimde Erişim Eşitliği:</strong> Fiziki erişim imkanı olmayan öğrencilere okul tanıtımı sunar.</li>
+                <li><strong>Teknoloji Okuryazarlığı:</strong> Lise öğrencilerinin ileri düzey medya ve yazılım araçlarıyla proje üretmesini teşvik eder.</li>
+                <li><strong>Rehberlik Sürecine Katkı:</strong> Rehber öğretmenler için güçlü bir okul tanıtım aracıdır.</li>
+                <li><strong>Sürdürülebilirlik:</strong> Farklı liseler için ölçeklenebilir bir model oluşturarak yaygınlaştırılabilir.</li>
+              </ul>
 
-          <h2 className="text-2xl font-bold text-red-700 mb-2">Okulumuz Hakkında</h2>
-          <p>
-            Bornova Anadolu Lisesi (BAL), Bornova, İzmir'de bulunan, üç dil eğitim yapan bir anadolu lisesidir.
-          </p>
-          <ul className="list-disc list-inside space-y-1">
-            <li><strong>Slogan:</strong> Geleceğin aydınlık sesi</li>
-            <li><strong>Kuruluş:</strong> 26 Mart 1953</li>
-            <li><strong>Ülke:</strong> Türkiye</li>
-            <li><strong>Şehir:</strong> İzmir</li>
-            <li><strong>İlçe:</strong> Bornova</li>
-            <li><strong>Türü:</strong> Anadolu Lisesi</li>
-            <li><strong>Müdür:</strong> Aydın Doğmuş</li>
-            <li><strong>Eğitim Dili:</strong> Türkçe</li>
-            <li><strong>Yabancı Diller:</strong> İngilizce, Almanca, Fransızca</li>
-            <li><strong>Öğrenci Sayısı:</strong> 1533 (2024 itibarıyla)</li>
-            <li><strong>Öğretmen Sayısı:</strong> 104 (2024 itibarıyla)</li>
-            <li><strong>Derslik Sayısı:</strong> 55 (2024 itibarıyla)</li>
-            <li><strong>Adresi:</strong> Mevlana, Ord. Prof. Dr. Muhiddin Erel Cd., 35050 Bornova/İzmir</li>
-            <li><strong>Resmî Sitesi:</strong> <a href="https://izmirbal.meb.k12.tr/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">izmirbal.meb.k12.tr</a></li>
-          </ul>
+              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">6. Projenin Gelecek Adımları</h3>
+              <ul className="list-disc list-inside space-y-1">
+                <li>BAL360 web sitesinin tüm cihazlarla uyumlu şekilde yayına alınması.</li>
+                <li>Rehberlik seminerlerinde proje sunumları yapılması.</li>
+                <li>Diğer liseler için içerik üretim atölyeleri düzenlenerek modelin yaygınlaştırılması.</li>
+                <li>Gelişmiş sanal tur rotaları ve yapay zeka destekli rehber anlatım entegrasyonları.</li>
+                <li>Görüntülerin Google Earth'e entegre edilmesi.</li>
+                <li>Sonuç olarak, görüntülerin gelecek fazlar aracılığıyla geliştirilmesi ve profesyonelleştirilmesi hedeflenmektedir.</li>
+              </ul>
+            </div>
+          </AccordionItem>
 
-          <h3 className="text-xl font-bold text-red-700 mt-6 mb-2">Tarihçesi</h3>
-          <p>
-            Okulun bugünkü tesislerinin bulunduğu alan 1950'lere kadar, Fransız asıllı varlıklı bir levanten olan Edmond Giraud'nun İzmir'in Bornova kazasına 2 kilometre uzaklıktaki 220 dönümlük çiftliğiydi. 1950'li yılların başında, İzmirli 50 dolayında tanınmış iş adamı, İzmir'de eksikliği hissedilen yabancı dil ile eğitim veren yatılı bir okulu şehirlerine kazandırmak amacı ile bir araya geldiler. Görüşmeler sonunda Giraud, arazisini içindeki tarihi köşkü, korusu ve güvercinliğiyle birlikte, bir okul yapılması koşuluyla, 26 Mart 1953 tarihinde sembolik bir bedelle Ege Koleji T.A.Ş.'e devretti ve kendisi de şirket ortağı oldu. Arazi üzerine, zengin bitki örtüsü korunarak derslikler, yatakhaneler, yemekhane ve konferans salonu inşa edildi. Böylece, 1953-1954 öğretim yılında "Bornova Anadolu Lisesi" eğitim ve öğretime başladı. Okula ilk yıl 38 yatılı erkek öğrenci kaydoldu.
-          </p>
-          <p>
-            1954 yılında Türkiye Cumhuriyeti Millî Eğitim Bakanlığı'nca yurt çapında yabancı dille öğretim yapacak olan Maarif Bakanlığı Kolejleri'nin kurulması kararlaştırılınca İzmir'deki Maarif Bakanlığı Koleji için uygun nitelikte bir yer aranmaya başlandı. İzmir Koleji; Diyarbakır, Eskişehir, İstanbul/Kadıköy, Konya ve Samsun Kolejleri ile birlikte Türkiye'nin ilk altı Maarif Bakanlığı Koleji arasında 22 Ekim 1955'te öğretime başlamıştır.
-          </p>
-          <p>
-            İlk 10 yıl sadece yatılı erkek kabul eden İzmir Koleji, 1964-1965 öğretim yılından itibaren Orta Öğretim Genel Müdürlüğü kararı ile kızları da kabul eden karma öğretime başladı. Bu yıldan başlamak üzere gündüzlü kız ve erkek öğrenciler de okula kabul edilmeye başladı.
-          </p>
-          <p>
-            1975 yılında okulun adı "İzmir Anadolu Lisesi" (İAL) olarak değiştirildi. 1976-1977 öğretim yılında ise, İzmir'de başka Anadolu Liseleri açılması üzerine, "Bornova Anadolu Lisesi" (BAL) adını aldı.
-          </p>
+          {/* Accordion Item for "Okulumuz Hakkında" */}
+          <AccordionItem
+            title="Okulumuz Hakkında"
+            isOpen={openSections['Okulumuz Hakkında']}
+            onToggle={() => toggleSection('Okulumuz Hakkında')}
+          >
+            <div className="space-y-4">
+              <p>
+                Bornova Anadolu Lisesi (BAL), Bornova, İzmir'de bulunan, üç dil eğitim yapan bir anadolu lisesidir.
+              </p>
+              <ul className="list-disc list-inside space-y-1">
+                <li><strong>Slogan:</strong> Geleceğin aydınlık sesi</li>
+                <li><strong>Kuruluş:</strong> 26 Mart 1953</li>
+                <li><strong>Ülke:</strong> Türkiye</li>
+                <li><strong>Şehir:</strong> İzmir</li>
+                <li><strong>İlçe:</strong> Bornova</li>
+                <li><strong>Türü:</strong> Anadolu Lisesi</li>
+                <li><strong>Müdür:</strong> Aydın Doğmuş</li>
+                <li><strong>Eğitim Dili:</strong> Türkçe</li>
+                <li><strong>Yabancı Diller:</strong> İngilizce, Almanca, Fransızca</li>
+                <li><strong>Öğrenci Sayısı:</strong> 1533 (2024 itibarıyla)</li>
+                <li><strong>Öğretmen Sayısı:</strong> 104 (2024 itibarıyla)</li>
+                <li><strong>Derslik Sayısı:</strong> 55 (2024 itibarıyla)</li>
+                <li><strong>Adresi:</strong> Mevlana, Ord. Prof. Dr. Muhiddin Erel Cd., 35050 Bornova/İzmir</li>
+                <li><strong>Resmî Sitesi:</strong> <a href="https://izmirbal.meb.k12.tr/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">izmirbal.meb.k12.tr</a></li>
+              </ul>
+            </div>
+          </AccordionItem>
 
+          {/* Accordion Item for "Tarihçesi" */}
+          <AccordionItem
+            title="Tarihçesi"
+            isOpen={openSections['Tarihçesi']}
+            onToggle={() => toggleSection('Tarihçesi')}
+          >
+            <div className="space-y-4">
+              <p>
+                Okulun bugünkü tesislerinin bulunduğu alan 1950'lere kadar, Fransız asıllı varlıklı bir levanten olan Edmond Giraud'nun İzmir'in Bornova kazasına 2 kilometre uzaklıktaki 220 dönümlük çiftliğiydi. 1950'li yılların başında, İzmirli 50 dolayında tanınmış iş adamı, İzmir'de eksikliği hissedilen yabancı dil ile eğitim veren yatılı bir okulu şehirlerine kazandırmak amacı ile bir araya geldiler. Görüşmeler sonunda Giraud, arazisini içindeki tarihi köşkü, korusu ve güvercinliğiyle birlikte, bir okul yapılması koşuluyla, 26 Mart 1953 tarihinde sembolik bir bedelle Ege Koleji T.A.Ş.'e devretti ve kendisi de şirket ortağı oldu. Arazi üzerine, zengin bitki örtüsü korunarak derslikler, yatakhaneler, yemekhane ve konferans salonu inşa edildi. Böylece, 1953-1954 öğretim yılında "Bornova Anadolu Lisesi" eğitim ve öğretime başladı. Okula ilk yıl 38 yatılı erkek öğrenci kaydoldu.
+              </p>
+              <p>
+                1954 yılında Türkiye Cumhuriyeti Millî Eğitim Bakanlığı'nca yurt çapında yabancı dille öğretim yapacak olan Maarif Bakanlığı Kolejleri'nin kurulması kararlaştırılınca İzmirdeki Maarif Bakanlığı Koleji için uygun nitelikte bir yer aranmaya başlandı. İzmir Koleji; Diyarbakır, Eskişehir, İstanbul/Kadıköy, Konya ve Samsun Kolejleri ile birlikte Türkiye'nin ilk altı Maarif Bakanlığı Koleji arasında 22 Ekim 1955'te öğretime başlamıştır.
+              </p>
+              <p>
+                İlk 10 yıl sadece yatılı erkek kabul eden İzmir Koleji, 1964-1965 öğretim yılından itibaren Orta Öğretim Genel Müdürlüğü kararı ile kızları da kabul eden karma öğretime başladı. Bu yıldan başlamak üzere gündüzlü kız ve erkek öğrenciler de okula kabul edilmeye başladı.
+              </p>
+              <p>
+                1975 yılında okulun adı "İzmir Anadolu Lisesi" (İAL) olarak değiştirildi. 1976-1977 öğretim yılında ise, İzmir'de başka Anadolu Liseleri açılması üzerine, "Bornova Anadolu Lisesi" (BAL) adını aldı.
+              </p>
+            </div>
+          </AccordionItem>
 
-          <h3 className="text-xl font-bold text-red-700 mt-6 mb-2">Bu Sanal Turu Hazırlayanlar</h3>
-          <ul className="list-disc list-inside space-y-1">
-            <li><strong>Yazılım:</strong> <a href="https://www.instagram.com/emre.bozqurt/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Emre Bozkurt</a></li>
-            <li><strong>Yazılım Yardımcısı:</strong> <a href="https://www.instagram.com/_canberk_q/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Canberk Özçağan</a></li>
+          {/* Accordion Item for "Bu Sanal Turu Hazırlayanlar" */}
+          <AccordionItem
+            title="Bu Sanal Turu Hazırlayanlar"
+            isOpen={openSections['Bu Sanal Turu Hazırlayanlar']}
+            onToggle={() => toggleSection('Bu Sanal Turu Hazırlayanlar')}
+          >
+            <ul className="list-disc list-inside space-y-1">
+              <li><strong>Yazılım:</strong> <a href="https://www.instagram.com/emre.bozqurt/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Emre Bozkurt</a></li>
+              <li><strong>Yazılım Yardımcısı:</strong> <a href="https://www.instagram.com/_canberk_q/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Canberk Özçağan</a></li>
+              <li><strong>Proje Görevlisi:</strong> <a href="https://www.instagram.com/basar.muslu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Ali Başar Muslu</a></li>
+            </ul>
+          </AccordionItem>
 
-            <li><strong>Proje Görevlisi:</strong> <a href="https://www.instagram.com/basar.muslu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Ali Başar Muslu</a></li>
-
-          </ul>
-          <h3 className="text-xl font-bold text-red-700 mt-6 mb-2">İletişim</h3>
-          <ul className="list-disc list-inside space-y-1">
-            <li><strong>Yazılım:</strong> <a href="mailto:info@emreb.com.tr" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">info@emreb.com.tr</a></li>
-            <li><strong>Yazılım Yardımcısı:</strong> <a href="mailto:canberkozcagan@gmail.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">canberkozcagan@gmail.com</a></li>
-
-            <li><strong>Proje Görevlisi:</strong> <a href="mailto:abasarmuslu@gmail.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">abasarmuslu@gmail.com</a></li>
-
-          </ul>
+          {/* Accordion Item for "İletişim" */}
+          <AccordionItem
+            title="İletişim"
+            isOpen={openSections['İletişim']}
+            onToggle={() => toggleSection('İletişim')}
+          >
+            <ul className="list-disc list-inside space-y-1">
+              <li><strong>Yazılım:</strong> <a href="mailto:hi@emreb.com.tr" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">hi@emreb.com.tr</a></li>
+              <li><strong>Yazılım Yardımcısı:</strong> <a href="mailto:canberkozcagan@gmail.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">canberkozcagan@gmail.com</a></li>
+              <li><strong>Proje Görevlisi:</strong> <a href="mailto:abasarmuslu@gmail.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">abasarmuslu@gmail.com</a></li>
+            </ul>
+          </AccordionItem>
 
         </div>
 
@@ -859,6 +953,46 @@ function WelcomeModal({ onStartTour }: WelcomeModalProps) {
           animation: scaleIn 0.5s ease-out forwards;
         }
       `}</style>
+    </div>
+  );
+}
+
+// AccordionItem Component
+interface AccordionItemProps {
+  title: string;
+  children: React.ReactNode;
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
+function AccordionItem({ title, children, isOpen, onToggle }: AccordionItemProps) {
+  return (
+    <div className="border-b border-gray-200 last:border-b-0">
+      <button
+        className="w-full flex justify-between items-center py-3 px-4 text-lg font-bold text-gray-800 hover:bg-gray-50 transition-colors duration-200 focus:outline-none" // Title color reverted to gray, hover color adjusted
+        onClick={onToggle}
+      >
+        {title}
+        <svg
+          className={`w-5 h-5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      {/* Content area with smooth max-height and opacity transition */}
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? 'max-h-[500vh] opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="px-4 py-3 bg-gray-100"> {/* Gray background for expanded content */}
+          {children}
+        </div>
+      </div>
     </div>
   );
 }
