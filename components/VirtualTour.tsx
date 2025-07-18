@@ -17,6 +17,7 @@ const translations = {
     projectAssistants: "Proje Asistanları:",
     teamMembers: "Ekip Üyeleri:",
     consultantAcademics: "Danışman Akademisyenler:",
+    cekim: "Çekim Görevlisi:",
     projectPurposeTitle: "1. Proje Amacı ve Hedefi",
     projectPurposeText: "BAL360 Projesi, Bornova Anadolu Lisesi (BAL) kampüsünü sanal tur teknolojisiyle tanıtmayı amaçlar. Hedefimiz, lise tercihi yapacak öğrencilerin okulun fiziksel, sosyal ve akademik ortamını 360° fotoğraf tabanlı bir sanal deneyimle uzaktan keşfetmelerini sağlamaktır. Bu sayede, kampüsü fiziksel olarak ziyaret edemeyen aday öğrenciler ve veliler, okul hakkında daha bilinçli karar verebileceklerdir.",
     targetAudienceTitle: "2. Hedef Kitle",
@@ -107,6 +108,7 @@ const translations = {
     projectAssistants: "Project Assistants:",
     teamMembers: "Team Members:",
     consultantAcademics: "Consultant Academics:",
+    cekim: "Photography Manager:",
     projectPurposeTitle: "1. Project Aim and Goal",
     projectPurposeText: "The BAL360 Project aims to introduce the Bornova Anatolian High School (BAL) campus using virtual tour technology. Our goal is to enable students who will make high school choices to remotely explore the physical, social, and academic environment of the school through a 360° photo-based virtual experience. This way, prospective students and parents who cannot physically visit the campus due to geographical barriers or lack of opportunity will be able to make a more informed and concrete decision about the school.",
     targetAudienceTitle: "2. Target Audience",
@@ -1050,6 +1052,8 @@ function WelcomeModal({ onStartTour, language, onLanguageToggle }: WelcomeModalP
                 <li><strong>{t.projectAssistants}</strong> Emre Bozkurt (10C), Canberk Özçağan (10C), Selen Can (10A), Doruk Munzur Tulga (10C)</li>
                 <li><strong>{t.teamMembers}</strong> Devran Ersönmez (10H), Barlas Ardıç (10C), Efkan Şenol (10H)</li>
                 <li><strong>{t.consultantAcademics}</strong> Prof. Dr. Vahap TECİM (Dokuz Eylül Üniversitesi), Yunus Al (Bornova Anadolu Lisesi Matematik Öğretmeni)</li>
+                <li><strong>{t.cekim}</strong> Selim Yengil(Dokuz Eylül Üniversitesi)</li>
+
               </ul>
 
               <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.projectPurposeTitle}</h3>
