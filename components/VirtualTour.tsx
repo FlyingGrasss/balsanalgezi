@@ -158,7 +158,7 @@ const translations = {
       { strong: "Number of Teachers:", text: "104 (as of 2024)" },
       { strong: "Number of classrooms:", text: "55 (as of 2024)" },
       { strong: "Address:", text: "Mevlana, Ord. Prof. Dr. Muhiddin Erel Cd., 35050 Bornova/İzmir" },
-      { strong: "Official Website:", text: "izmirbal.meb.k12.tr" }
+      { strong: "Official Website:", text: "" }
     ],
     historyTitle: "History",
     historyParagraph1: "The area where the school's current facilities are located was, until the 1950s, the 220-acre farm of Edmond Giraud, a wealthy Levantine of French origin, located 2 kilometers from Bornova district of İzmir. In the early 1950s, about 50 well-known businessmen from İzmir came together with the aim of bringing a boarding school providing foreign language education, which was felt to be lacking in İzmir, to their city. As a result of the negotiations, Giraud, transferred his land, along with its historical mansion, grove, and dovecote, to Ege Koleji T.A.Ş.'e devretti ve kendisi de şirket ortağı oldu. Arazi üzerine, zengin bitki örtüsü korunarak derslikler, yatakhaneler, yemekhane ve konferans salonu inşa edildi. Böylece, 1953-1954 öğretim yılında \"Bornova Anatolian High School\" education and teaching began. In its first year, 38 male boarding students enrolled.",
@@ -1103,7 +1103,7 @@ function WelcomeModal({ onStartTour, language, onLanguageToggle }: WelcomeModalP
                 {t.schoolInfoList.map((item, index) => (
                   <li key={index}>
                     <strong>{item.strong}</strong> {item.text}
-                    {item.strong === "Resmî Sitesi:" || item.strong === "Official Website:" && (
+                    {(item.strong === "Resmî Sitesi:" || item.strong === "Official Website:") && (
                       <a href="https://izmirbal.meb.k12.tr/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">izmirbal.meb.k12.tr</a>
                     )}
                   </li>
