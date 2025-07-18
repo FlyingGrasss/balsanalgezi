@@ -1103,7 +1103,7 @@ function WelcomeModal({ onStartTour, language, onLanguageToggle }: WelcomeModalP
                 {t.schoolInfoList.map((item, index) => (
                   <li key={index}>
                     <strong>{item.strong}</strong> {item.text}
-                    {item.strong === "Resmî Sitesi:" || item.strong === "Official Website" && (
+                    {item.strong == "Resmî Sitesi:" || item.strong == "Official Website:" && (
                       <a href="https://izmirbal.meb.k12.tr/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">izmirbal.meb.k12.tr</a>
                     )}
                   </li>
