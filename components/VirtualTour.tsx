@@ -67,7 +67,7 @@ const translations = {
       { strong: "Öğretmen Sayısı:", text: "104 (2024 itibarıyla)" },
       { strong: "Derslik Sayısı:", text: "55 (2024 itibarıyla)" },
       { strong: "Adresi:", text: "Mevlana, Ord. Prof. Dr. Muhiddin Erel Cd., 35050 Bornova/İzmir" },
-      { strong: "Resmî Sitesi:", text: "" }
+      { strong: "Resmî Sitesi:", text: "izmirbal.meb.k12.tr" }
     ],
     historyTitle: "Tarihçesi",
     historyParagraph1: "Okulun bugünkü tesislerinin bulunduğu alan 1950'lere kadar, Fransız asıllı varlıklı bir levanten olan Edmond Giraud'nun İzmir'in Bornova kazasına 2 kilometre uzaklıktaki 220 dönümlük çiftliğiydi. 1950'li yılların başında, İzmirli 50 dolayında tanınmış iş adamı, İzmir'de eksikliği hissedilen yabancı dil ile eğitim veren yatılı bir okulu şehirlerine kazandırmak amacı ile bir araya geldiler. Görüşmeler sonunda Giraud, arazisini içindeki tarihi köşkü, korusu ve güvercinliğiyle birlikte, bir okul yapılması koşuluyla, 26 Mart 1953 tarihinde sembolik bir bedelle Ege Koleji T.A.Ş.'e devretti ve kendisi de şirket ortağı oldu. Arazi üzerine, zengin bitki örtüsü korunarak derslikler, yatakhaneler, yemekhane ve konferans salonu inşa edildi. Böylece, 1953-1954 öğretim yılında \"Bornova Anadolu Lisesi\" eğitim ve öğretime başladı. Okula ilk yıl 38 yatılı erkek öğrenci kaydoldu.",
@@ -228,7 +228,7 @@ const locations: Location[] = [
       { position: { x: -1.5, y: -0.05, z: 4 }, label: "", target: 43, type: 'animated-arrow-right' },
       // { position: { x: -1, y: 0, z: 1.5 }, label: "Konferans Salonu", info: { title: "Konferans Salonu", description: "Okulumuzun Konferans Salonu. Geniş ve ferah!" }, type: 'info' },
     ],
-    initialCameraTarget: [-1, 0, 1], // Default camera target
+    initialCameraTarget: [-1, 0, 0], // Default camera target
   },
   {
     name: "2",
