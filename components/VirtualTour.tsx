@@ -67,7 +67,7 @@ const translations = {
       { strong: "Öğretmen Sayısı:", text: "104 (2024 itibarıyla)" },
       { strong: "Derslik Sayısı:", text: "55 (2024 itibarıyla)" },
       { strong: "Adresi:", text: "Mevlana, Ord. Prof. Dr. Muhiddin Erel Cd., 35050 Bornova/İzmir" },
-      { strong: "Resmî Sitesi:", text: "izmirbal.meb.k12.tr" }
+      { strong: "Resmî Sitesi:", text: "" }
     ],
     historyTitle: "Tarihçesi",
     historyParagraph1: "Okulun bugünkü tesislerinin bulunduğu alan 1950'lere kadar, Fransız asıllı varlıklı bir levanten olan Edmond Giraud'nun İzmir'in Bornova kazasına 2 kilometre uzaklıktaki 220 dönümlük çiftliğiydi. 1950'li yılların başında, İzmirli 50 dolayında tanınmış iş adamı, İzmir'de eksikliği hissedilen yabancı dil ile eğitim veren yatılı bir okulu şehirlerine kazandırmak amacı ile bir araya geldiler. Görüşmeler sonunda Giraud, arazisini içindeki tarihi köşkü, korusu ve güvercinliğiyle birlikte, bir okul yapılması koşuluyla, 26 Mart 1953 tarihinde sembolik bir bedelle Ege Koleji T.A.Ş.'e devretti ve kendisi de şirket ortağı oldu. Arazi üzerine, zengin bitki örtüsü korunarak derslikler, yatakhaneler, yemekhane ve konferans salonu inşa edildi. Böylece, 1953-1954 öğretim yılında \"Bornova Anadolu Lisesi\" eğitim ve öğretime başladı. Okula ilk yıl 38 yatılı erkek öğrenci kaydoldu.",
@@ -158,7 +158,7 @@ const translations = {
       { strong: "Number of Teachers:", text: "104 (as of 2024)" },
       { strong: "Number of classrooms:", text: "55 (as of 2024)" },
       { strong: "Address:", text: "Mevlana, Ord. Prof. Dr. Muhiddin Erel Cd., 35050 Bornova/İzmir" },
-      { strong: "Official Website:", text: "izmirbal.meb.k12.tr" }
+      { strong: "Official Website:", text: "" }
     ],
     historyTitle: "History",
     historyParagraph1: "The area where the school's current facilities are located was, until the 1950s, the 220-acre farm of Edmond Giraud, a wealthy Levantine of French origin, located 2 kilometers from Bornova district of İzmir. In the early 1950s, about 50 well-known businessmen from İzmir came together with the aim of bringing a boarding school providing foreign language education, which was felt to be lacking in İzmir, to their city. As a result of the negotiations, Giraud, transferred his land, along with its historical mansion, grove, and dovecote, to Ege Koleji T.A.Ş.'e devretti ve kendisi de şirket ortağı oldu. Arazi üzerine, zengin bitki örtüsü korunarak derslikler, yatakhaneler, yemekhane ve konferans salonu inşa edildi. Böylece, 1953-1954 öğretim yılında \"Bornova Anatolian High School\" education and teaching began. In its first year, 38 male boarding students enrolled.",
@@ -1103,7 +1103,7 @@ function WelcomeModal({ onStartTour, language, onLanguageToggle }: WelcomeModalP
                 {t.schoolInfoList.map((item, index) => (
                   <li key={index}>
                     <strong>{item.strong}</strong> {item.text}
-                    {item.strong === "Resmî Sitesi:" && (
+                    {item.strong === "Resmî Sitesi:" || "Official Website" && (
                       <a href="https://izmirbal.meb.k12.tr/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">izmirbal.meb.k12.tr</a>
                     )}
                   </li>
