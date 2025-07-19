@@ -1153,7 +1153,7 @@ function WelcomeModal({ onStartTour, language, onLanguageToggle }: WelcomeModalP
 
         <button
           onClick={onStartTour}
-          className="px-8 py-3 mt-auto bg-blue-600 text-white cursor-pointer font-bold rounded-full shadow-lg hover:bg-blue-700 transition-all duration-500 transform hover:scale-102 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
+          className="px-8 py-3 mt-8 bg-blue-600 text-white cursor-pointer font-bold rounded-full shadow-lg hover:bg-blue-700 transition-all duration-500 transform hover:scale-102 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
         >
           {t.startTourButton}
         </button>
