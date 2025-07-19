@@ -1036,7 +1036,7 @@ function WelcomeModal({ onStartTour, language, onLanguageToggle }: WelcomeModalP
           </h1>
         </div>
 
-        <div className="text-left text-gray-800 space-y-2 mb-24 flex-grow overflow-y-auto pr-2">
+        <div className="text-left text-gray-800 space-y-2 mb-32 flex-grow overflow-y-auto pr-2">
 
           <AccordionItem
             title={t.aboutProjectTitle}
