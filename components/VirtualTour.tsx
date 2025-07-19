@@ -228,7 +228,7 @@ const locations: Location[] = [
       { position: { x: -1.5, y: -0.05, z: 4 }, label: "", target: 43, type: 'animated-arrow-right' },
       // { position: { x: -1, y: 0, z: 1.5 }, label: "Konferans Salonu", info: { title: "Konferans Salonu", description: "Okulumuzun Konferans Salonu. Geniş ve ferah!" }, type: 'info' },
     ],
-    initialCameraTarget: [-1, 0, -0.1], // Default camera target
+    initialCameraTarget: [-1, 0, -1], // Default camera target
   },
   {
     name: "2",
