@@ -1346,6 +1346,11 @@ export default function VirtualTour() {
             locale={language} // Pass the language state here
           />
 
+          <a href='https://www.instagram.com/emre.bozqurt' target='_blank' rel='noopener noreferrer'
+            className="absolute bottom-4 left-[50%] max-sm:bottom-2 max-sm:text-sm max-sm:w-[95vw] text-blue-500 underline -translate-x-1/2 w-fit text-center cursor-pointer z-40 p-2 rounded-full bg-white/90 shadow-md hover:bg-white transition-colors">
+            {language == "tr" ? `Bu website Emre Bozkurt'28 tarafından yapılmıştır.` : `This website was made by Emre Bozkurt'28`}
+          </a>
+
           {/* THREE.JS CANVAS CONTAINER */}
           <Canvas
             dpr={[1, 2]}
