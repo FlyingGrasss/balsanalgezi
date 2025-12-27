@@ -1287,6 +1287,37 @@ export default function VirtualTour() {
     }
   }, [isLoading, currentLocation, locations]); // Removed showWelcomeModal from dependencies to prevent re-triggering after modal close
 
+  // Keep your existing fetch useEffects
+  useEffect(() => {
+    if (!showWelcomeModal) return;
+
+    const url = locations[0].image;
+    fetch(url).then(r => r.blob()).catch(() => {});
+  }, [showWelcomeModal]);
+
+  useEffect(() => {
+    if (showWelcomeModal) return;
+
+    const prefetchNearby = () => {
+      const nearbyTargets = locations[currentLocation].hotspots
+        .filter(h => h.target !== undefined)
+        .map(h => h.target as number);
+
+      nearbyTargets.forEach((idx) => {
+        const url = locations[idx].image;
+        fetch(url).then(r => r.blob()).catch(() => {});
+      });
+    };
+
+    if ('requestIdleCallback' in window) {
+      const id = requestIdleCallback(prefetchNearby, { timeout: 3000 });
+      return () => cancelIdleCallback(id);
+    } else {
+      const timeoutId = setTimeout(prefetchNearby, 1000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [currentLocation, showWelcomeModal]);
+
   return (
     <div className="relative w-screen h-screen bg-gray-900 overflow-hidden font-inter">
       {/* Welcome Modal - Rendered conditionally */}
