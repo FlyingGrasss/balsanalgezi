@@ -228,7 +228,7 @@ const locations: Location[] = [
       { position: { x: -1.5, y: -0.05, z: 4 }, label: "", target: 43, type: 'animated-arrow-right' },
       // { position: { x: -1, y: 0, z: 1.5 }, label: "Konferans Salonu", info: { title: "Konferans Salonu", description: "Okulumuzun Konferans Salonu. Geniş ve ferah!" }, type: 'info' },
     ],
-    initialCameraTarget: [-1, 0, 1], // Default camera target
+    initialCameraTarget: [-0.01, 0, 0.1], // Default camera target
   },
   {
     name: "2",
@@ -972,7 +972,7 @@ function AccordionItem({ title, children, isOpen, onToggle }: AccordionItemProps
   return (
     <div className="border-b border-gray-200 last:border-b-0">
       <button
-        className="w-full flex justify-between items-center py-3 px-4 text-lg font-bold text-gray-800 hover:bg-gray-50 transition-colors duration-200 focus:outline-none"
+        className="w-full cursor-pointer flex justify-between items-center py-3 px-4 text-lg font-bold text-gray-800 hover:bg-gray-50 transition-colors duration-200 focus:outline-none"
         onClick={onToggle}
       >
         {title}
@@ -1027,16 +1027,16 @@ function WelcomeModal({ onStartTour, language, onLanguageToggle }: WelcomeModalP
   };
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-red-800 to-red-950 flex flex-col items-center z-[100] overflow-y-auto">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 max-sm:p-4 text-center transform scale-95 opacity-0 mt-0 animate-scaleIn flex flex-col flex-grow">
-        <div className="flex-shrink-0">
+    <div className="fixed inset-0 bg-linear-to-br from-red-800 to-red-950 flex flex-col items-center z-100 overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 max-sm:p-4 text-center transform scale-95 opacity-0 mt-0 animate-scaleIn flex flex-col grow">
+        <div className="shrink-0">
           <img src="/logo.png" alt="Bornova Anadolu Lisesi Logo" className="mx-auto mb-6 w-32 h-32 object-contain" />
           <h1 className="text-4xl max-sm:text-2xl font-extrabold text-gray-900 mb-4 drop-shadow-md">
             {t.welcomeTitle}
           </h1>
         </div>
 
-        <div className="text-left text-gray-800 space-y-2 mb-32 flex-grow overflow-y-auto pr-2">
+        <div className="text-left text-gray-800 space-y-2 mb-32 grow overflow-y-auto pr-2">
 
           <AccordionItem
             title={t.aboutProjectTitle}
