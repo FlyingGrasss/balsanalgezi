@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState, useCallback, Suspense } from 'react';
 import * as THREE from 'three';
+import { X } from 'lucide-react';
 
 import { Canvas, useLoader, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
@@ -930,7 +931,7 @@ function Sidebar({ locations, currentLocation, setCurrentLocation, isOpen, onClo
           <button
             onClick={onClose}
             className="p-2 cursor-pointer rounded-full hover:bg-gray-100 transition-colors"
-            aria-label={t.sidebarCloseLabel} 
+            aria-label={t.sidebarCloseLabel}
           >
             {/* Inline Close SVG */}
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1195,6 +1196,7 @@ export default function VirtualTour() {
   const [modalContent, setModalContent] = useState<InfoContent | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar visibility
   const [showWelcomeModal, setShowWelcomeModal] = useState(true); // New: State to control welcome modal visibility
+  const [showCredit, setShowCredit] = useState(true);
   const [language, setLanguage] = useState<'tr' | 'en'>('tr'); // Language state lifted here
 
   const t = translations[language]; // Get current language translations
@@ -1377,10 +1379,22 @@ export default function VirtualTour() {
             locale={language} // Pass the language state here
           />
 
-          <a href='https://www.instagram.com/emre.bozqurt' target='_blank' rel='noopener noreferrer'
-            className="absolute bottom-4 left-[50%] select-none max-sm:bottom-2 max-sm:text-sm max-sm:w-full underline -translate-x-1/2 w-fit text-center cursor-pointer z-40 p-2 rounded-full bg-white/90 shadow-md hover:bg-white transition-colors">
-            {language == "tr" ? `Bu website Emre Bozkurt'28 tarafından yapılmıştır.` : `This website was made by Emre Bozkurt'28`}
-          </a>
+          {showCredit && (
+            <div className="fixed bottom-4 left-1/2 z-40 max-sm:w-[calc(100vw-1.5rem)] w-[calc(100vw-1rem)] -translate-x-1/2 rounded-full bg-white/90 shadow-md sm:w-fit sm:px-1 max-sm:bottom-2">
+              <a href='https://www.instagram.com/emre.bozqurt' target='_blank' rel='noopener noreferrer'
+                className="block max-w-full transition-colors hover:bg-white rounded-full select-none break-words p-2 text-center text-sm underline cursor-pointer sm:text-base">
+                {language == "tr" ? `Bu website Emre Bozkurt'28 tarafından yapılmıştır.` : `This website was made by Emre Bozkurt'28`}
+              </a>
+              <button
+                type="button"
+                onClick={() => setShowCredit(false)}
+                className="absolute -right-3 -top-3 max-sm:-top-2.5 max-sm:-right-2.5 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-white/90 p-0 text-gray-600 shadow-md hover:bg-white hover:text-gray-900"
+                aria-label={t.closeButtonText}
+              >
+                <X className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+          )}
 
           {/* THREE.JS CANVAS CONTAINER */}
           <Canvas
