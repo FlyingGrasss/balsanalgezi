@@ -1189,16 +1189,13 @@ function WelcomeModal({ onStartTour, language, onLanguageToggle }: WelcomeModalP
 }
 
 
-interface VirtualTourProps {
-  isActive?: boolean;
-}
-
-export default function VirtualTour({ isActive = true }: VirtualTourProps) {
+export default function VirtualTour() {
   const [currentLocation, setCurrentLocation] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<InfoContent | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar visibility
+  const [showWelcomeModal, setShowWelcomeModal] = useState(true); // New: State to control welcome modal visibility
   const [showCredit, setShowCredit] = useState(true);
   const [language, setLanguage] = useState<'tr' | 'en'>('tr'); // Language state lifted here
 
@@ -1232,6 +1229,14 @@ export default function VirtualTour({ isActive = true }: VirtualTourProps) {
     setIsSidebarOpen(false);
   }, []);
 
+  const handleStartTour = useCallback(() => {
+    setShowWelcomeModal(false);
+  }, []);
+
+  const handleLanguageToggle = useCallback(() => {
+    setLanguage(prevLang => (prevLang === 'tr' ? 'en' : 'tr'));
+  }, []);
+
   useEffect(() => {
     // Load info icon texture from inline SVG
     createTextureFromSvgString(INFO_SVG_CONTENT, 64, 64).then((texture) => {
@@ -1260,17 +1265,19 @@ export default function VirtualTour({ isActive = true }: VirtualTourProps) {
   }, []);
 
   useEffect(() => {
-    if (!isActive) return;
-
-    setIsLoading(true);
-    const currentLocData = locations[currentLocation];
-    if (currentLocData.panoramaRotation) {
-      setPanoramaMeshRotation(currentLocData.panoramaRotation);
-    } else {
-      setPanoramaMeshRotation([0, 0, 0]); // Default to no rotation if not specified
+    // Only set loading state and panorama rotation if the welcome modal is not shown
+    if (!showWelcomeModal) {
+      setIsLoading(true);
+      const currentLocData = locations[currentLocation];
+      if (currentLocData.panoramaRotation) {
+        setPanoramaMeshRotation(currentLocData.panoramaRotation);
+      } else {
+        setPanoramaMeshRotation([0, 0, 0]); // Default to no rotation if not specified
+      }
     }
-  }, [currentLocation, isActive]);
+  }, [currentLocation, showWelcomeModal]); // Depend on currentLocation and showWelcomeModal
 
+  // Effect for setting initial camera target - now also depends on showWelcomeModal
   useEffect(() => {
     if (!isLoading && orbitControlsRef.current && locations[currentLocation]?.initialCameraTarget) {
       const initialTarget = locations[currentLocation].initialCameraTarget;
@@ -1280,18 +1287,18 @@ export default function VirtualTour({ isActive = true }: VirtualTourProps) {
         console.log(`Set initial camera target for location ${currentLocation} to:`, initialTarget);
       }
     }
-  }, [isLoading, currentLocation, locations]);
+  }, [isLoading, currentLocation, locations]); // Removed showWelcomeModal from dependencies to prevent re-triggering after modal close
 
   // Keep your existing fetch useEffects
   useEffect(() => {
-    if (!isActive) return;
+    if (!showWelcomeModal) return;
 
     const url = locations[0].image;
     fetch(url).then(r => r.blob()).catch(() => {});
-  }, [isActive]);
+  }, [showWelcomeModal]);
 
   useEffect(() => {
-    if (!isActive) return;
+    if (showWelcomeModal) return;
 
     const prefetchNearby = () => {
       const nearbyTargets = locations[currentLocation].hotspots
@@ -1311,11 +1318,15 @@ export default function VirtualTour({ isActive = true }: VirtualTourProps) {
       const timeoutId = setTimeout(prefetchNearby, 1000);
       return () => clearTimeout(timeoutId);
     }
-  }, [currentLocation, isActive]);
+  }, [currentLocation, showWelcomeModal]);
 
   return (
     <div className="relative w-screen h-screen bg-gray-900 overflow-hidden font-inter">
-      {isActive && (
+      {/* Welcome Modal - Rendered conditionally */}
+      {showWelcomeModal && <WelcomeModal onStartTour={handleStartTour} language={language} onLanguageToggle={handleLanguageToggle} />}
+
+      {/* Main Tour Content - Rendered only if welcome modal is dismissed */}
+      {!showWelcomeModal && (
         <>
           {/* Loading Overlay */}
           {isLoading && (
