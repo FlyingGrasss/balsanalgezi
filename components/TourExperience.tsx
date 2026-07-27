@@ -40,16 +40,6 @@ export default function TourExperience({ introModal }: TourExperienceProps) {
   );
 
   useEffect(() => {
-    if (!isIntroOpen) return;
-
-    const focusTimer = window.setTimeout(() => {
-      document.getElementById('intro-modal-start')?.focus();
-    }, 0);
-
-    return () => window.clearTimeout(focusTimer);
-  }, [isIntroOpen]);
-
-  useEffect(() => {
     return () => {
       if (dismissTimerRef.current !== null) {
         window.clearTimeout(dismissTimerRef.current);

@@ -20,10 +20,6 @@ export default function IntroModal() {
           <h1 id="intro-modal-title" className="text-4xl max-sm:text-2xl font-extrabold text-gray-900 mb-4 drop-shadow-md">
             Bornova Anadolu Lisesi (BAL) Sanal Turuna Hoş Geldiniz!
           </h1>
-          <p id="intro-modal-description" className="text-left text-gray-800">
-            Bornova Anadolu Lisesi kampüsünü 360° fotoğraflarla keşfedin; sınıfları,
-            laboratuvarları, spor alanlarını ve sosyal alanları interaktif bir sanal turla inceleyin.
-          </p>
         </div>
 
         <div className="text-left text-gray-800 space-y-2 mb-32 grow overflow-y-auto pr-2">
@@ -39,7 +35,7 @@ export default function IntroModal() {
                 <li><strong>Çekim Görevlisi:</strong> Selim Yengil (Dokuz Eylül Üniversitesi)</li>
               </ul>
               <h2 className="text-xl font-bold text-gray-800 mt-4 mb-2">1. Proje Amacı ve Hedefi</h2>
-              <p>BAL360 Projesi, Bornova Anadolu Lisesi (BAL) kampüsünü sanal tur teknolojisiyle tanıtmayı amaçlar. Hedefimiz, lise tercihi yapacak öğrencilerin okulun fiziksel, sosyal ve akademik ortamını 360° fotoğraf tabanlı bir sanal deneyimle uzaktan keşfetmelerini sağlamaktır.</p>
+              <p id="intro-modal-description">BAL360 Projesi, Bornova Anadolu Lisesi (BAL) kampüsünü sanal tur teknolojisiyle tanıtmayı amaçlar. Hedefimiz, lise tercihi yapacak öğrencilerin okulun fiziksel, sosyal ve akademik ortamını 360° fotoğraf tabanlı bir sanal deneyimle uzaktan keşfetmelerini sağlamaktır.</p>
               <h2 className="text-xl font-bold text-gray-800 mt-4 mb-2">2. Hedef Kitle</h2>
               <ul className="list-disc list-inside space-y-1">
                 <li>LGS sonrası tercih yapacak 8. sınıf öğrencileri ve velileri</li>
