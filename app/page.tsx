@@ -1,7 +1,7 @@
 // app/page.tsx
 // REMOVE: import Head from 'next/head'; // This import is likely causing the problem
 
-import VirtualTour from '@/components/VirtualTour';
+import TourExperience from '@/components/TourExperience';
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
       </Head> */}
       
       <main className="fixed inset-0">
-        <VirtualTour />
+        <TourExperience />
       </main>
     </>
   );

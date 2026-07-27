@@ -1144,7 +1144,7 @@ function WelcomeModal({ onStartTour, language, onLanguageToggle }: WelcomeModalP
             onToggle={() => toggleSection('İletişim')}
           >
             <ul className="list-disc list-inside space-y-1">
-              <li><strong>{t.software}</strong> <a href="mailto:contact@emreb.com.tr" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">contact@emreb.com.tr</a></li>
+              <li><strong>{t.software}</strong> <a href="mailto:emreb.programming@gmail.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">emreb.programming@gmail.com</a></li>
               <li><strong>{t.softwareAssistant}</strong> <a href="mailto:canberkozcagan@gmail.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">canberkozcagan@gmail.com</a></li>
               <li><strong>{t.projectOfficer}</strong> <a href="mailto:abasarmuslu@gmail.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">abasarmuslu@gmail.com</a></li>
             </ul>
@@ -1189,15 +1189,17 @@ function WelcomeModal({ onStartTour, language, onLanguageToggle }: WelcomeModalP
 }
 
 
-export default function VirtualTour() {
+interface VirtualTourProps {
+  language: 'tr' | 'en';
+}
+
+export default function VirtualTour({ language }: VirtualTourProps) {
   const [currentLocation, setCurrentLocation] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<InfoContent | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar visibility
-  const [showWelcomeModal, setShowWelcomeModal] = useState(true); // New: State to control welcome modal visibility
   const [showCredit, setShowCredit] = useState(true);
-  const [language, setLanguage] = useState<'tr' | 'en'>('tr'); // Language state lifted here
 
   const t = translations[language]; // Get current language translations
 
@@ -1229,14 +1231,6 @@ export default function VirtualTour() {
     setIsSidebarOpen(false);
   }, []);
 
-  const handleStartTour = useCallback(() => {
-    setShowWelcomeModal(false);
-  }, []);
-
-  const handleLanguageToggle = useCallback(() => {
-    setLanguage(prevLang => (prevLang === 'tr' ? 'en' : 'tr'));
-  }, []);
-
   useEffect(() => {
     // Load info icon texture from inline SVG
     createTextureFromSvgString(INFO_SVG_CONTENT, 64, 64).then((texture) => {
@@ -1265,17 +1259,14 @@ export default function VirtualTour() {
   }, []);
 
   useEffect(() => {
-    // Only set loading state and panorama rotation if the welcome modal is not shown
-    if (!showWelcomeModal) {
-      setIsLoading(true);
-      const currentLocData = locations[currentLocation];
-      if (currentLocData.panoramaRotation) {
-        setPanoramaMeshRotation(currentLocData.panoramaRotation);
-      } else {
-        setPanoramaMeshRotation([0, 0, 0]); // Default to no rotation if not specified
-      }
+    setIsLoading(true);
+    const currentLocData = locations[currentLocation];
+    if (currentLocData.panoramaRotation) {
+      setPanoramaMeshRotation(currentLocData.panoramaRotation);
+    } else {
+      setPanoramaMeshRotation([0, 0, 0]); // Default to no rotation if not specified
     }
-  }, [currentLocation, showWelcomeModal]); // Depend on currentLocation and showWelcomeModal
+  }, [currentLocation]);
 
   // Effect for setting initial camera target - now also depends on showWelcomeModal
   useEffect(() => {
@@ -1289,17 +1280,7 @@ export default function VirtualTour() {
     }
   }, [isLoading, currentLocation, locations]); // Removed showWelcomeModal from dependencies to prevent re-triggering after modal close
 
-  // Keep your existing fetch useEffects
   useEffect(() => {
-    if (!showWelcomeModal) return;
-
-    const url = locations[0].image;
-    fetch(url).then(r => r.blob()).catch(() => {});
-  }, [showWelcomeModal]);
-
-  useEffect(() => {
-    if (showWelcomeModal) return;
-
     const prefetchNearby = () => {
       const nearbyTargets = locations[currentLocation].hotspots
         .filter(h => h.target !== undefined)
@@ -1318,16 +1299,11 @@ export default function VirtualTour() {
       const timeoutId = setTimeout(prefetchNearby, 1000);
       return () => clearTimeout(timeoutId);
     }
-  }, [currentLocation, showWelcomeModal]);
+  }, [currentLocation]);
 
   return (
     <div className="relative w-screen h-screen bg-gray-900 overflow-hidden font-inter">
-      {/* Welcome Modal - Rendered conditionally */}
-      {showWelcomeModal && <WelcomeModal onStartTour={handleStartTour} language={language} onLanguageToggle={handleLanguageToggle} />}
-
-      {/* Main Tour Content - Rendered only if welcome modal is dismissed */}
-      {!showWelcomeModal && (
-        <>
+      <>
           {/* Loading Overlay */}
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-50">
@@ -1441,8 +1417,7 @@ export default function VirtualTour() {
               rotateSpeed={-0.7}
             />
           </Canvas>
-        </>
-      )}
+      </>
     </div>
   );
 }
