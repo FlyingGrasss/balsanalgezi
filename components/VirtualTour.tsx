@@ -961,243 +961,18 @@ function Sidebar({ locations, currentLocation, setCurrentLocation, isOpen, onClo
 }
 // --- End Sidebar Component ---
 
-// AccordionItem Component
-interface AccordionItemProps {
-  title: string;
-  children: React.ReactNode;
-  isOpen: boolean;
-  onToggle: () => void;
+interface VirtualTourProps {
+  isActive?: boolean;
 }
 
-function AccordionItem({ title, children, isOpen, onToggle }: AccordionItemProps) {
-  return (
-    <div className="border-b border-gray-200 last:border-b-0">
-      <button
-        className="w-full cursor-pointer flex justify-between items-center py-3 px-4 text-lg font-bold text-gray-800 hover:bg-gray-50 transition-colors duration-200 focus:outline-none"
-        onClick={onToggle}
-      >
-        {title}
-        <svg
-          className={`w-5 h-5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
-      </button>
-      <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-[500vh] opacity-100' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="px-4 py-3 bg-gray-100">
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// --- Welcome Modal Component ---
-interface WelcomeModalProps {
-  onStartTour: () => void;
-  language: 'tr' | 'en'; // Add language prop
-  onLanguageToggle: () => void; // Add language toggle prop
-}
-
-function WelcomeModal({ onStartTour, language, onLanguageToggle }: WelcomeModalProps) {
-  const t = translations[language]; // Get current language translations
-
-  // State to manage which accordion sections are open
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    'Bu Proje Hakkında': false, // Use original keys for state management
-    'Okulumuz Hakkında': false,
-    'Tarihçesi': false,
-    'Bu Sanal Turu Hazırlayanlar': false,
-    'İletişim': false,
-  });
-
-  // Function to toggle the open/close state of an accordion section
-  const toggleSection = (sectionName: string) => {
-    setOpenSections(prev => ({
-      ...prev,
-      [sectionName]: !prev[sectionName],
-    }));
-  };
-
-  return (
-    <div className="fixed inset-0 bg-linear-to-br from-red-800 to-red-950 flex flex-col items-center z-100 overflow-y-auto">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 max-sm:p-4 text-center transform scale-95 opacity-0 mt-0 animate-scaleIn flex flex-col grow">
-        <div className="shrink-0">
-          <img src="/logo.png" alt="Bornova Anadolu Lisesi Logo" className="mx-auto mb-6 w-32 h-32 object-contain" />
-          <h1 className="text-4xl max-sm:text-2xl font-extrabold text-gray-900 mb-4 drop-shadow-md">
-            {t.welcomeTitle}
-          </h1>
-        </div>
-
-        <div className="text-left text-gray-800 space-y-2 mb-32 grow overflow-y-auto pr-2">
-
-          <AccordionItem
-            title={t.aboutProjectTitle}
-            isOpen={openSections['Bu Proje Hakkında']}
-            onToggle={() => toggleSection('Bu Proje Hakkında')}
-          >
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold text-gray-800 mb-2">{t.projectName}</h3>
-
-              <h3 className="text-xl font-bold text-gray-800 mb-2">{t.projectTeamTitle}</h3>
-              <ul className="list-disc list-inside space-y-1">
-                <li><strong>{t.projectLead}</strong> Ali Başar Muslu (10H)</li>
-                <li><strong>{t.projectAssistants}</strong> Emre Bozkurt (10C), Canberk Özçağan (10C), Selen Can (10A), Doruk Munzur Tulga (10C)</li>
-                <li><strong>{t.teamMembers}</strong> Devran Ersönmez (10H), Barlas Ardıç (10C), Efkan Şenol (10H)</li>
-                <li><strong>{t.consultantAcademics}</strong> Prof. Dr. Vahap TECİM (Dokuz Eylül Üniversitesi), Yunus Al (Bornova Anadolu Lisesi Matematik Öğretmeni)</li>
-                <li><strong>{t.cekim}</strong> Selim Yengil(Dokuz Eylül Üniversitesi)</li>
-
-              </ul>
-
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.projectPurposeTitle}</h3>
-              <p>{t.projectPurposeText}</p>
-
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.targetAudienceTitle}</h3>
-              <ul className="list-disc list-inside space-y-1">
-                {t.targetAudienceList.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.innovationTitle}</h3>
-              <ul className="list-disc list-inside space-y-1">
-                {t.innovationList.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.technicalDescriptionTitle}</h3>
-              <p>{t.technicalDescriptionText}</p>
-
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.valueAndImpactTitle}</h3>
-              <ul className="list-disc list-inside space-y-1">
-                {t.valueAndImpactList.map((item, index) => (
-                  <li key={index}><strong>{item.strong}</strong> {item.text}</li>
-                ))}
-              </ul>
-
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.futureStepsTitle}</h3>
-              <ul className="list-disc list-inside space-y-1">
-                {t.futureStepsList.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </AccordionItem>
-
-          <AccordionItem
-            title={t.aboutSchoolTitle}
-            isOpen={openSections['Okulumuz Hakkında']}
-            onToggle={() => toggleSection('Okulumuz Hakkında')}
-          >
-            <div className="space-y-4">
-              <p>{t.aboutSchoolText}</p>
-              <ul className="list-disc list-inside space-y-1">
-                {t.schoolInfoList.map((item, index) => (
-                  <li key={index}>
-                    <strong>{item.strong}</strong> {item.text}
-                    {(item.strong === "Resmî Sitesi:" || item.strong === "Official Website:") && (
-                      <a href="https://izmirbal.meb.k12.tr/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">izmirbal.meb.k12.tr</a>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </AccordionItem>
-
-          <AccordionItem
-            title={t.historyTitle}
-            isOpen={openSections['Tarihçesi']}
-            onToggle={() => toggleSection('Tarihçesi')}
-          >
-            <div className="space-y-4">
-              <p>{t.historyParagraph1}</p>
-              <p>{t.historyParagraph2}</p>
-              <p>{t.historyParagraph3}</p>
-              <p>{t.historyParagraph4}</p>
-            </div>
-          </AccordionItem>
-
-          <AccordionItem
-            title={t.developersTitle}
-            isOpen={openSections['Bu Sanal Turu Hazırlayanlar']}
-            onToggle={() => toggleSection('Bu Sanal Turu Hazırlayanlar')}
-          >
-            <ul className="list-disc list-inside space-y-1">
-              <li><strong>{t.software}</strong> <a href="https://www.instagram.com/emre.bozqurt/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Emre Bozkurt</a></li>
-              <li><strong>{t.softwareAssistant}</strong> <a href="https://www.instagram.com/_canberk_q/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Canberk Özçağan</a></li>
-              <li><strong>{t.projectOfficer}</strong> <a href="https://www.instagram.com/basar.muslu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Ali Başar Muslu</a></li>
-            </ul>
-          </AccordionItem>
-
-          <AccordionItem
-            title={t.contactTitle}
-            isOpen={openSections['İletişim']}
-            onToggle={() => toggleSection('İletişim')}
-          >
-            <ul className="list-disc list-inside space-y-1">
-              <li><strong>{t.software}</strong> <a href="mailto:contact@emreb.com.tr" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">contact@emreb.com.tr</a></li>
-              <li><strong>{t.softwareAssistant}</strong> <a href="mailto:canberkozcagan@gmail.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">canberkozcagan@gmail.com</a></li>
-              <li><strong>{t.projectOfficer}</strong> <a href="mailto:abasarmuslu@gmail.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">abasarmuslu@gmail.com</a></li>
-            </ul>
-          </AccordionItem>
-
-        </div>
-
-        <button
-          onClick={onStartTour}
-          className="px-8 py-3 mt-8 bg-blue-600 text-white cursor-pointer font-bold rounded-full shadow-lg hover:bg-blue-700 transition-all duration-500 transform hover:scale-102 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
-        >
-          {t.startTourButton}
-        </button>
-
-        {/* Language Switch Button - Only visible on Welcome Modal */}
-        <div className="absolute top-4 right-4">
-          <button
-            onClick={onLanguageToggle}
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-full shadow-md hover:bg-gray-300 transition-colors text-sm font-semibold"
-          >
-            {t.languageSwitchText}
-          </button>
-        </div>
-      </div>
-      <style jsx>{`
-        @keyframes scaleIn {
-          from {
-            transform: scale(0.8);
-            opacity: 0;
-          }
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-        .animate-scaleIn {
-          animation: scaleIn 0.5s ease-out forwards;
-        }
-      `}</style>
-    </div>
-  );
-}
-
-
-export default function VirtualTour() {
+export default function VirtualTour({ isActive = true }: VirtualTourProps) {
   const [currentLocation, setCurrentLocation] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<InfoContent | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar visibility
-  const [showWelcomeModal, setShowWelcomeModal] = useState(true); // New: State to control welcome modal visibility
   const [showCredit, setShowCredit] = useState(true);
-  const [language, setLanguage] = useState<'tr' | 'en'>('tr'); // Language state lifted here
+  const [language] = useState<'tr' | 'en'>('tr');
 
   const t = translations[language]; // Get current language translations
 
@@ -1229,15 +1004,9 @@ export default function VirtualTour() {
     setIsSidebarOpen(false);
   }, []);
 
-  const handleStartTour = useCallback(() => {
-    setShowWelcomeModal(false);
-  }, []);
-
-  const handleLanguageToggle = useCallback(() => {
-    setLanguage(prevLang => (prevLang === 'tr' ? 'en' : 'tr'));
-  }, []);
-
   useEffect(() => {
+    if (!isActive) return;
+
     // Load info icon texture from inline SVG
     createTextureFromSvgString(INFO_SVG_CONTENT, 64, 64).then((texture) => {
       infoIconTextureRef.current = texture;
@@ -1262,24 +1031,26 @@ export default function VirtualTour() {
       console.log('Arrow Up icon texture loaded from inline SVG.');
     });
 
-  }, []);
+  }, [isActive]);
 
   useEffect(() => {
-    // Only set loading state and panorama rotation if the welcome modal is not shown
-    if (!showWelcomeModal) {
-      setIsLoading(true);
-      const currentLocData = locations[currentLocation];
-      if (currentLocData.panoramaRotation) {
-        setPanoramaMeshRotation(currentLocData.panoramaRotation);
-      } else {
-        setPanoramaMeshRotation([0, 0, 0]); // Default to no rotation if not specified
-      }
+    if (!isActive) return;
+
+    setIsLoading(true);
+    const currentLocData = locations[currentLocation];
+    if (currentLocData.panoramaRotation) {
+      setPanoramaMeshRotation(currentLocData.panoramaRotation);
+    } else {
+      setPanoramaMeshRotation([0, 0, 0]); // Default to no rotation if not specified
     }
-  }, [currentLocation, showWelcomeModal]); // Depend on currentLocation and showWelcomeModal
+  }, [currentLocation, isActive]);
 
-  // Effect for setting initial camera target - now also depends on showWelcomeModal
   useEffect(() => {
-    if (!isLoading && orbitControlsRef.current && locations[currentLocation]?.initialCameraTarget) {
+    if (!isActive || isLoading || !orbitControlsRef.current || !locations[currentLocation]?.initialCameraTarget) {
+      return;
+    }
+
+    if (locations[currentLocation]?.initialCameraTarget) {
       const initialTarget = locations[currentLocation].initialCameraTarget;
       if (initialTarget) {
         orbitControlsRef.current.target.set(...initialTarget);
@@ -1287,18 +1058,10 @@ export default function VirtualTour() {
         console.log(`Set initial camera target for location ${currentLocation} to:`, initialTarget);
       }
     }
-  }, [isLoading, currentLocation, locations]); // Removed showWelcomeModal from dependencies to prevent re-triggering after modal close
-
-  // Keep your existing fetch useEffects
-  useEffect(() => {
-    if (!showWelcomeModal) return;
-
-    const url = locations[0].image;
-    fetch(url).then(r => r.blob()).catch(() => {});
-  }, [showWelcomeModal]);
+  }, [isActive, isLoading, currentLocation, locations]);
 
   useEffect(() => {
-    if (showWelcomeModal) return;
+    if (!isActive) return;
 
     const prefetchNearby = () => {
       const nearbyTargets = locations[currentLocation].hotspots
@@ -1318,15 +1081,11 @@ export default function VirtualTour() {
       const timeoutId = setTimeout(prefetchNearby, 1000);
       return () => clearTimeout(timeoutId);
     }
-  }, [currentLocation, showWelcomeModal]);
+  }, [currentLocation, isActive]);
 
   return (
     <div className="relative w-screen h-screen bg-gray-900 overflow-hidden font-inter">
-      {/* Welcome Modal - Rendered conditionally */}
-      {showWelcomeModal && <WelcomeModal onStartTour={handleStartTour} language={language} onLanguageToggle={handleLanguageToggle} />}
-
-      {/* Main Tour Content - Rendered only if welcome modal is dismissed */}
-      {!showWelcomeModal && (
+      {isActive && (
         <>
           {/* Loading Overlay */}
           {isLoading && (
