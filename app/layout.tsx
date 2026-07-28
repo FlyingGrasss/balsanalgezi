@@ -1,7 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
+import './globals.css?inline';
 import DeferredAnalytics from '@/components/DeferredAnalytics';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap', preload: false });
