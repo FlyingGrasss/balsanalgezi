@@ -2,9 +2,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { Analytics } from "@vercel/analytics/next"
+import DeferredAnalytics from '@/components/DeferredAnalytics';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], display: 'swap', preload: false });
 
 export const metadata: Metadata = {
   title: 'Bornova Anadolu Lisesi (BAL) Sanal Gezi', // Daha açıklayıcı başlık
@@ -80,7 +80,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} bg-gray-900`}>
         {children}
-        <Analytics />
+        <DeferredAnalytics />
       </body>
     </html>
   );
