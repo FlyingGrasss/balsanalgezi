@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type Language = 'tr' | 'en';
 
@@ -195,6 +195,7 @@ interface IntroModalProps {
 
 export default function IntroModal({ language, onStartTour, onLanguageToggle }: IntroModalProps) {
   const t = translations[language];
+  const [isAnimated, setIsAnimated] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     'Bu Proje Hakkında': false,
     'Okulumuz Hakkında': false,
@@ -202,6 +203,11 @@ export default function IntroModal({ language, onStartTour, onLanguageToggle }: 
     'Bu Sanal Turu Hazırlayanlar': false,
     'İletişim': false,
   });
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setIsAnimated(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   const toggleSection = (sectionName: string) => {
     setOpenSections(prev => ({ ...prev, [sectionName]: !prev[sectionName] }));
@@ -214,7 +220,7 @@ export default function IntroModal({ language, onStartTour, onLanguageToggle }: 
         aria-modal="true"
         aria-labelledby="intro-modal-title"
         aria-describedby="intro-modal-description"
-        className="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 max-sm:p-4 text-center transform scale-95 opacity-0 mt-0 animate-scaleIn flex flex-col grow"
+        className={`bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 max-sm:p-4 text-center transform scale-95 opacity-100 mt-0 flex flex-col grow ${isAnimated ? 'animate-scaleIn' : ''}`}
       >
         <div className="shrink-0">
           <img src="/logo.png" alt="Bornova Anadolu Lisesi Logo" className="mx-auto mb-6 w-32 h-32 object-contain" />
