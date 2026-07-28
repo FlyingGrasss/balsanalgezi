@@ -1358,8 +1358,8 @@ export default function VirtualTour({ language }: VirtualTourProps) {
           {showCredit && (
             <div className="fixed bottom-4 left-1/2 z-40 max-sm:w-[calc(100vw-1.5rem)] w-[calc(100vw-1rem)] -translate-x-1/2 rounded-full bg-white/90 shadow-md sm:w-fit sm:px-1 max-sm:bottom-2">
               <a href='https://www.instagram.com/emre.bozqurt' target='_blank' rel='noopener noreferrer'
-                className="block max-w-full transition-colors hover:bg-white rounded-full select-none break-words p-2 text-center text-sm underline cursor-pointer sm:text-base">
-                {language == "tr" ? `Bu website Emre Bozkurt'28 tarafından yapılmıştır.` : `This website was made by Emre Bozkurt'28`}
+                className="block max-w-full transition-colors hover:bg-white rounded-full select-none break-words p-2 text-center text-[10px] underline cursor-pointer sm:text-sm">
+                {language == "tr" ? `Bu website Emre Bozkurt'28 & Ali Başar Muslu'28 tarafından yapılmıştır.` : `This website was made by Emre Bozkurt'28 & Ali Başar Muslu'28`}
               </a>
               <button
                 type="button"
