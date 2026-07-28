@@ -223,7 +223,7 @@ export default function IntroModal({ language, onStartTour, onLanguageToggle }: 
         className={`bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 max-sm:p-4 text-center transform scale-95 opacity-100 mt-0 flex flex-col grow ${isAnimated ? 'animate-scaleIn' : ''}`}
       >
         <div className="shrink-0">
-          <img src="/logo.png" alt="Bornova Anadolu Lisesi Logo" className="mx-auto mb-6 w-32 h-32 object-contain" />
+          <img src="/logo.webp" alt="Bornova Anadolu Lisesi Logo" width={128} height={128} className="mx-auto mb-6 w-32 h-32 object-contain" />
           <h1 id="intro-modal-title" className="text-4xl max-sm:text-2xl font-extrabold text-gray-900 mb-4 drop-shadow-md">
             {t.welcomeTitle}
           </h1>
@@ -232,8 +232,8 @@ export default function IntroModal({ language, onStartTour, onLanguageToggle }: 
         <div id="intro-modal-description" className="text-left text-gray-800 space-y-2 mb-32 grow overflow-y-auto pr-2">
           <AccordionItem title={t.aboutProjectTitle} isOpen={openSections['Bu Proje Hakkında']} onToggle={() => toggleSection('Bu Proje Hakkında')}>
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-gray-800 mb-2">{t.projectName}</h3>
-              <h3 className="text-xl font-bold text-gray-800 mb-2">{t.projectTeamTitle}</h3>
+              <h2 className="text-xl font-bold text-gray-800 mb-2">{t.projectName}</h2>
+              <h2 className="text-xl font-bold text-gray-800 mb-2">{t.projectTeamTitle}</h2>
               <ul className="list-disc list-inside space-y-1">
                 <li><strong>{t.projectLead}</strong> Ali Başar Muslu (10H)</li>
                 <li><strong>{t.projectAssistants}</strong> Emre Bozkurt (10C), Canberk Özçağan (10C), Selen Can (10A), Doruk Munzur Tulga (10C)</li>
@@ -241,17 +241,17 @@ export default function IntroModal({ language, onStartTour, onLanguageToggle }: 
                 <li><strong>{t.consultantAcademics}</strong> Prof. Dr. Vahap TECİM (Dokuz Eylül Üniversitesi), Yunus Al (Bornova Anadolu Lisesi Matematik Öğretmeni)</li>
                 <li><strong>{t.cekim}</strong> Selim Yengil(Dokuz Eylül Üniversitesi)</li>
               </ul>
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.projectPurposeTitle}</h3>
+              <h2 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.projectPurposeTitle}</h2>
               <p>{t.projectPurposeText}</p>
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.targetAudienceTitle}</h3>
+              <h2 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.targetAudienceTitle}</h2>
               <ul className="list-disc list-inside space-y-1">{t.targetAudienceList.map((item, index) => <li key={index}>{item}</li>)}</ul>
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.innovationTitle}</h3>
+              <h2 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.innovationTitle}</h2>
               <ul className="list-disc list-inside space-y-1">{t.innovationList.map((item, index) => <li key={index}>{item}</li>)}</ul>
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.technicalDescriptionTitle}</h3>
+              <h2 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.technicalDescriptionTitle}</h2>
               <p>{t.technicalDescriptionText}</p>
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.valueAndImpactTitle}</h3>
+              <h2 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.valueAndImpactTitle}</h2>
               <ul className="list-disc list-inside space-y-1">{t.valueAndImpactList.map((item, index) => <li key={index}><strong>{item.strong}</strong> {item.text}</li>)}</ul>
-              <h3 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.futureStepsTitle}</h3>
+              <h2 className="text-xl font-bold text-gray-800 mt-4 mb-2">{t.futureStepsTitle}</h2>
               <ul className="list-disc list-inside space-y-1">{t.futureStepsList.map((item, index) => <li key={index}>{item}</li>)}</ul>
             </div>
           </AccordionItem>
