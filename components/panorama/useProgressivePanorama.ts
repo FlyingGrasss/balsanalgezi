@@ -13,6 +13,8 @@ const CACHE_LIMITS: Record<PanoramaTier, number> = {
 
 const DISPOSE_DELAY_MS = 2000;
 const TEXTURE_ANISOTROPY = 8;
+const HIGH_QUALITY_QUIET_MS = 1500;
+const HIGH_QUALITY_RETRY_MS = 300;
 
 interface CachedTexture {
   texture: THREE.Texture;
@@ -264,6 +266,8 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
   const ownerRef = useRef<object>({});
   const runTokenRef = useRef(0);
   const highTierEligibleRef = useRef<boolean | null>(null);
+  const pointerDownRef = useRef(false);
+  const lastInteractionRef = useRef(0);
 
   const applyTexture = useCallback((
     nextTexture: THREE.Texture,
@@ -292,6 +296,38 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
   }, []);
 
   useEffect(() => {
+    const markInteraction = () => {
+      lastInteractionRef.current = Date.now();
+    };
+    const handlePointerDown = () => {
+      pointerDownRef.current = true;
+      markInteraction();
+    };
+    const handlePointerUp = () => {
+      pointerDownRef.current = false;
+      markInteraction();
+    };
+
+    window.addEventListener('pointerdown', handlePointerDown, { passive: true });
+    window.addEventListener('pointerup', handlePointerUp, { passive: true });
+    window.addEventListener('pointercancel', handlePointerUp, { passive: true });
+    window.addEventListener('touchstart', handlePointerDown, { passive: true });
+    window.addEventListener('touchend', handlePointerUp, { passive: true });
+    window.addEventListener('touchcancel', handlePointerUp, { passive: true });
+    window.addEventListener('blur', handlePointerUp);
+
+    return () => {
+      window.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointercancel', handlePointerUp);
+      window.removeEventListener('touchstart', handlePointerDown);
+      window.removeEventListener('touchend', handlePointerUp);
+      window.removeEventListener('touchcancel', handlePointerUp);
+      window.removeEventListener('blur', handlePointerUp);
+    };
+  }, []);
+
+  useEffect(() => {
     const token = ++runTokenRef.current;
     const owner = ownerRef.current;
     let cancelled = false;
@@ -312,8 +348,46 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
 
     const isCurrent = () => !cancelled && runTokenRef.current === token;
 
-    const startHighOrFinish = () => {
+    // Anchor the quiet window to the room change itself so the native high
+    // texture does not start uploading while the user is beginning to drag.
+    lastInteractionRef.current = Date.now();
+
+    let quietTimer: ReturnType<typeof setTimeout> | null = null;
+    let applyTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const isHighQuiet = () => {
+      if (pointerDownRef.current) {
+        return false;
+      }
+
+      return Date.now() - lastInteractionRef.current >= HIGH_QUALITY_QUIET_MS;
+    };
+
+    const applyHighWhenQuiet = (highTexture: THREE.Texture) => {
+      if (!isCurrent()) {
+        return;
+      }
+
+      if (!isHighQuiet()) {
+        applyTimer = setTimeout(
+          () => applyHighWhenQuiet(highTexture),
+          HIGH_QUALITY_RETRY_MS,
+        );
+        return;
+      }
+
+      applyTexture(highTexture, 'high', panoramaId);
+    };
+
+    const scheduleHigh = () => {
       if (!isCurrent() || !highTierEligibleRef.current) {
+        return;
+      }
+
+      // The native tier is a ~74 MB GPU upload. Never start it while the user
+      // is dragging; wait until the pointer has been quiet for a moment.
+      if (!isHighQuiet()) {
+        quietTimer = setTimeout(scheduleHigh, HIGH_QUALITY_RETRY_MS);
         return;
       }
 
@@ -322,12 +396,15 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
           return;
         }
 
+        if (!isHighQuiet()) {
+          scheduleHigh();
+          return;
+        }
+
         void (async () => {
           const cachedHigh = getCachedTexture('high', urls.high);
           if (cachedHigh) {
-            if (isCurrent()) {
-              applyTexture(cachedHigh, 'high', panoramaId);
-            }
+            applyHighWhenQuiet(cachedHigh);
             return;
           }
 
@@ -338,7 +415,7 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
               return;
             }
 
-            applyTexture(cacheTexture('high', urls.high, loaded), 'high', panoramaId);
+            applyHighWhenQuiet(cacheTexture('high', urls.high, loaded));
           } catch {
             // High quality is an enhancement; keep the last usable texture.
           }
@@ -354,7 +431,7 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
       const cachedMid = getCachedTexture('mid', urls.mid);
       if (cachedMid) {
         applyTexture(cachedMid, 'mid', panoramaId);
-        startHighOrFinish();
+        scheduleHigh();
         return;
       }
 
@@ -366,7 +443,7 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
         }
 
         applyTexture(cacheTexture('mid', urls.mid, loaded), 'mid', panoramaId);
-        startHighOrFinish();
+        scheduleHigh();
       } catch {
         // Mid is an enhancement; the preview remains visible.
       }
@@ -411,6 +488,12 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
     return () => {
       cancelled = true;
       cancelIdle?.();
+      if (quietTimer) {
+        clearTimeout(quietTimer);
+      }
+      if (applyTimer) {
+        clearTimeout(applyTimer);
+      }
     };
   }, [applyTexture, panoramaId, retryToken]);
 

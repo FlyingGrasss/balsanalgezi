@@ -4,6 +4,8 @@ import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import IntroModal from '@/components/IntroModal';
+import { FIRST_PANORAMA_ID } from '@/lib/panoramas';
+import { preloadPanoramaImage } from '@/lib/panorama-preload';
 
 function TourBootScreen() {
   return (
@@ -40,11 +42,21 @@ export default function TourExperience() {
 
     // The first preview is already preloaded by the document <head>. Warm the
     // much larger Three.js chunk as soon as hydration finishes so a click does
-    // not have to wait for it. Do not prefetch the mid image here: it competes
-    // with this critical chunk for bandwidth.
-    void import('@/components/VirtualTour').catch(() => {
-      // The real dynamic import will surface a useful error when the tour starts.
-    });
+    // not have to wait for it. Only warm the mid tier after that chunk settles,
+    // so the image never competes with the critical JS download.
+    void import('@/components/VirtualTour')
+      .then(() => {
+        const connection = (
+          navigator as Navigator & { connection?: { saveData?: boolean } }
+        ).connection;
+
+        if (!connection?.saveData) {
+          preloadPanoramaImage(FIRST_PANORAMA_ID, 'mid');
+        }
+      })
+      .catch(() => {
+        // The real dynamic import will surface a useful error when the tour starts.
+      });
   }, []);
 
   useEffect(() => {
