@@ -8,6 +8,7 @@ import { panoramaUrl, type PanoramaTier } from '@/lib/panoramas';
 const CACHE_LIMITS: Record<PanoramaTier, number> = {
   preview: 6,
   mid: 2,
+  mobile: 1,
   high: 1,
 };
 
@@ -24,6 +25,7 @@ interface CachedTexture {
 const textureCache: Record<PanoramaTier, Map<string, CachedTexture>> = {
   preview: new Map(),
   mid: new Map(),
+  mobile: new Map(),
   high: new Map(),
 };
 
@@ -141,6 +143,7 @@ function trimCache(tier: PanoramaTier): void {
 function trimAllCaches(): void {
   trimCache('preview');
   trimCache('mid');
+  trimCache('mobile');
   trimCache('high');
 }
 
@@ -175,13 +178,9 @@ function cacheTexture(tier: PanoramaTier, url: string, texture: THREE.Texture): 
   return texture;
 }
 
-function canUseHighTier(): boolean {
+function getPremiumTier(): 'high' | 'mobile' | null {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') {
-    return false;
-  }
-
-  if (!window.matchMedia('(min-width: 900px) and (hover: hover)').matches) {
-    return false;
+    return null;
   }
 
   const connection = (
@@ -191,24 +190,28 @@ function canUseHighTier(): boolean {
   ).connection;
 
   if (connection?.saveData) {
-    return false;
+    return null;
   }
 
   if (connection?.effectiveType === '2g' || connection?.effectiveType === 'slow-2g') {
-    return false;
+    return null;
   }
 
   const deviceMemory = (
     navigator as Navigator & { deviceMemory?: number }
   ).deviceMemory;
 
-  // The native high tier is a 6080x3040 texture (~74 MB of VRAM). Skip it on
-  // devices that report very little memory rather than risking context loss.
   if (deviceMemory !== undefined && deviceMemory < 4) {
-    return false;
+    return null;
   }
 
-  return true;
+  // Desktop gets the native 6080x3040 texture (~74 MB VRAM); touch devices
+  // get a 4096x2048 tier (~33 MB VRAM) instead.
+  const canUseNative =
+    window.matchMedia('(min-width: 900px) and (hover: hover)').matches &&
+    navigator.maxTouchPoints === 0;
+
+  return canUseNative ? 'high' : 'mobile';
 }
 
 function scheduleIdleWork(callback: () => void): () => void {
@@ -265,7 +268,7 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
 
   const ownerRef = useRef<object>({});
   const runTokenRef = useRef(0);
-  const highTierEligibleRef = useRef<boolean | null>(null);
+  const premiumTierRef = useRef<'high' | 'mobile' | null | undefined>(undefined);
   const pointerDownRef = useRef(false);
   const lastInteractionRef = useRef(0);
 
@@ -336,15 +339,17 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
     const urls = {
       preview: panoramaUrl(panoramaId, 'preview'),
       mid: panoramaUrl(panoramaId, 'mid'),
+      mobile: panoramaUrl(panoramaId, 'mobile'),
       high: panoramaUrl(panoramaId, 'high'),
     };
 
     protectedUrlsByOwner.set(owner, new Set(Object.values(urls)));
     setError(null);
 
-    if (highTierEligibleRef.current === null) {
-      highTierEligibleRef.current = canUseHighTier();
+    if (premiumTierRef.current === undefined) {
+      premiumTierRef.current = getPremiumTier();
     }
+    const premiumTier = premiumTierRef.current;
 
     const isCurrent = () => !cancelled && runTokenRef.current === token;
 
@@ -363,24 +368,27 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
       return Date.now() - lastInteractionRef.current >= HIGH_QUALITY_QUIET_MS;
     };
 
-    const applyHighWhenQuiet = (highTexture: THREE.Texture) => {
+    const applyHighWhenQuiet = (
+      highTexture: THREE.Texture,
+      tier: 'high' | 'mobile',
+    ) => {
       if (!isCurrent()) {
         return;
       }
 
       if (!isHighQuiet()) {
         applyTimer = setTimeout(
-          () => applyHighWhenQuiet(highTexture),
+          () => applyHighWhenQuiet(highTexture, tier),
           HIGH_QUALITY_RETRY_MS,
         );
         return;
       }
 
-      applyTexture(highTexture, 'high', panoramaId);
+      applyTexture(highTexture, tier, panoramaId);
     };
 
     const scheduleHigh = () => {
-      if (!isCurrent() || !highTierEligibleRef.current) {
+      if (!isCurrent() || !premiumTier) {
         return;
       }
 
@@ -402,20 +410,23 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
         }
 
         void (async () => {
-          const cachedHigh = getCachedTexture('high', urls.high);
+          const cachedHigh = getCachedTexture(premiumTier, urls[premiumTier]);
           if (cachedHigh) {
-            applyHighWhenQuiet(cachedHigh);
+            applyHighWhenQuiet(cachedHigh, premiumTier);
             return;
           }
 
           try {
-            const loaded = await loadPanoramaTexture(urls.high);
+            const loaded = await loadPanoramaTexture(urls[premiumTier]);
             if (!isCurrent()) {
               loaded.dispose();
               return;
             }
 
-            applyHighWhenQuiet(cacheTexture('high', urls.high, loaded));
+            applyHighWhenQuiet(
+              cacheTexture(premiumTier, urls[premiumTier], loaded),
+              premiumTier,
+            );
           } catch {
             // High quality is an enhancement; keep the last usable texture.
           }

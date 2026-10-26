@@ -13,11 +13,12 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 ## Panorama pipeline
 
-The tour uses three WebP tiers generated from the original 6080×3040 JPEGs:
+The tour uses four WebP tiers generated from the original 6080×3040 JPEGs:
 
 - `preview` (1024×512) — first frame, preloaded in the document head
-- `mid` (2560×1280) — mobile/tablet quality cap
-- `high` (6080×3040) — native desktop quality, loaded after the mid tier
+- `mid` (2560×1280) — immediate quality upgrade on all devices
+- `mobile` (4096×2048) — touch-device high tier, loaded after pointer quiet
+- `high` (6080×3040) — native desktop quality, loaded after pointer quiet
 
 Regenerate the assets with:
 

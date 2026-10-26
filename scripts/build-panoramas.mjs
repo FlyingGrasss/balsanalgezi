@@ -35,6 +35,7 @@ const SOURCE_HEIGHT = 3040;
 const TIERS = {
   preview: { width: 1024, height: 512, quality: 70 },
   mid: { width: 2560, height: 1280, quality: 80 },
+  mobile: { width: 4096, height: 2048, quality: 90 },
   high: { width: 6080, height: 3040, quality: 85 },
 };
 
