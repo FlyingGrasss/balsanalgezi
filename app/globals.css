@@ -10,7 +10,6 @@ html, body {
 }
 
 body {
-  touch-action: none;
   overscroll-behavior: none;
 }
 

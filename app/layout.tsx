@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import DeferredAnalytics from '@/components/DeferredAnalytics';
+import { FIRST_PANORAMA_ID, panoramaUrl } from '@/lib/panoramas';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap', preload: false });
 
@@ -77,6 +78,12 @@ export default function RootLayout({
       <head>
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link
+          rel="preload"
+          as="image"
+          href={panoramaUrl(FIRST_PANORAMA_ID, 'preview')}
+          fetchPriority="high"
+        />
       </head>
       <body className={`${inter.className} bg-gray-900`}>
         {children}

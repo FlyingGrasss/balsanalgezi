@@ -10,6 +10,19 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true, // Ignore ESLint errors during build
   },
+  async headers() {
+    return [
+      {
+        source: "/panoramas/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
   turbopack: {
     resolveAlias: {
       "../build/polyfills/polyfill-module": "./lib/modern-polyfill.js",

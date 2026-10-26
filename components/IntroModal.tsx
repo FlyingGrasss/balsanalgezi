@@ -190,10 +190,11 @@ function AccordionItem({ title, children, isOpen, onToggle }: AccordionItemProps
 interface IntroModalProps {
   language: Language;
   onStartTour: () => void;
+  onStartIntent?: () => void;
   onLanguageToggle: () => void;
 }
 
-export default function IntroModal({ language, onStartTour, onLanguageToggle }: IntroModalProps) {
+export default function IntroModal({ language, onStartTour, onStartIntent, onLanguageToggle }: IntroModalProps) {
   const t = translations[language];
   const [isAnimated, setIsAnimated] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -286,7 +287,13 @@ export default function IntroModal({ language, onStartTour, onLanguageToggle }: 
           </AccordionItem>
         </div>
 
-        <button onClick={onStartTour} className="px-8 py-3 mt-8 bg-blue-600 text-white cursor-pointer font-bold rounded-full shadow-lg hover:bg-blue-700 transition-all duration-500 transform hover:scale-102 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50">
+        <button
+          onClick={onStartTour}
+          onPointerEnter={onStartIntent}
+          onFocus={onStartIntent}
+          onTouchStart={onStartIntent}
+          className="px-8 py-3 mt-8 bg-blue-600 text-white cursor-pointer font-bold rounded-full shadow-lg hover:bg-blue-700 transition-all duration-500 transform hover:scale-102 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
+        >
           {t.startTourButton}
         </button>
 
