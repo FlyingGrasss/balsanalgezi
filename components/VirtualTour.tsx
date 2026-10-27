@@ -41,7 +41,7 @@ const translations: Record<Language, TourCopy> = {
     locations: [
       "Giriş", "2", "3", "Anaokulu Arkası", "B Blok ile C Blok Arası", "B Blok Önü",
       "B Blok Giriş", "B Blok Koridor", "Matematik ve Bilim Atölyesi", "Robotik Odası",
-      "Dörtyol", "C Blok Önü", "C Blok", "Bilgisayar Odası", "Kimya Odası",
+      "Dörtyol", "C Blok Önü", "C Blok", "Bilgisayar Odası", "Fizik Odası",
       "A Blok Öğretmen Girişi", "Brifing Salonu", "Örnek Sınıf", "A Blok Hol",
       "20", "Koru (C Blok Yanı)", "C Blok Yanı", "BALEV Merdiven Önü",
       "BALEV Merdivenleri", "BALEV Yanı", "BALEV Arkası", "Koru (BALEV Arkası)",
@@ -60,7 +60,7 @@ const translations: Record<Language, TourCopy> = {
     locations: [
       "Entrance", "2", "3", "Behind Kindergarten", "Between B Block and C Block", "In front of B Block",
       "B Block Entrance", "B Block Corridor", "Mathematics and Science Workshop", "Robotics Room",
-      "Crossroads", "In front of C Block", "C Block", "Computer Room", "Chemistry Room",
+      "Crossroads", "In front of C Block", "C Block", "Computer Room", "Physics Room",
       "A Block Teacher's Entrance", "Briefing Hall", "Sample Classroom", "A Block Hall",
       "20", "Grove (Next to C Block)", "Next to C Block", "BALEV Staircase Front",
       "BALEV Stairs", "Next to BALEV", "Behind BALEV", "Grove (Behind BALEV)",
@@ -391,6 +391,7 @@ export default function VirtualTour({ language }: VirtualTourProps) {
   const [dismissedError, setDismissedError] = useState<Error | null>(null);
   const [iconTextures, setIconTextures] = useState<HotspotIconTextures>(EMPTY_ICON_TEXTURES);
   const [isZoomedIn, setIsZoomedIn] = useState(false);
+  const [isPinching, setIsPinching] = useState(false);
 
   const t = translations[language];
   const copy = errorMessages[language];
@@ -411,6 +412,13 @@ export default function VirtualTour({ language }: VirtualTourProps) {
 
   const orbitControlsRef = useRef<OrbitControlsImpl | null>(null);
   const iconTexturesRef = useRef<THREE.Texture[]>([]);
+
+  const handlePinchChange = useCallback((pinching: boolean) => {
+    if (orbitControlsRef.current) {
+      orbitControlsRef.current.enabled = !pinching;
+    }
+    setIsPinching(pinching);
+  }, []);
 
   const goToLocation = useCallback((index: number) => {
     if (index < 0 || index >= locations.length) {
@@ -547,7 +555,11 @@ export default function VirtualTour({ language }: VirtualTourProps) {
           }}
         >
           <Panorama texture={texture} rotation={panoramaRotation} />
-          <PanoramaZoom onZoomChange={setIsZoomedIn} />
+          <PanoramaZoom
+            controlsRef={orbitControlsRef}
+            onPinchChange={handlePinchChange}
+            onZoomChange={setIsZoomedIn}
+          />
 
           {displayedLocation && displayedLocation.hotspots.map((hotspot, index) => (
             <HotspotComponent
@@ -564,6 +576,7 @@ export default function VirtualTour({ language }: VirtualTourProps) {
 
           <OrbitControls
             ref={orbitControlsRef}
+            enabled={!isPinching}
             enableDamping
             dampingFactor={0.05}
             minDistance={1}
@@ -571,7 +584,7 @@ export default function VirtualTour({ language }: VirtualTourProps) {
             target={initialCameraTarget}
             enableZoom={false}
             enablePan={false}
-            rotateSpeed={-0.7}
+            rotateSpeed={isZoomedIn ? -0.38 : -0.7}
           />
         </Canvas>
       </div>

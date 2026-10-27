@@ -162,7 +162,7 @@ export const locations: Location[] = [
     ],
   },
   {
-    name: "Kimya Odası",
+    name: "Fizik Odası",
     panoramaId: 16,
     panoramaRotation: [0, Math.PI * 1.05, 0],
     hotspots: [
