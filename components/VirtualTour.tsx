@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { Canvas, useFrame, type ThreeEvent } from '@react-three/fiber';
+import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { X } from 'lucide-react';
@@ -16,6 +16,7 @@ import {
   type Location,
 } from '@/lib/tour-data';
 import Panorama from '@/components/panorama/Panorama';
+import PanoramaZoom from '@/components/panorama/PanoramaZoom';
 import { useProgressivePanorama } from '@/components/panorama/useProgressivePanorama';
 
 type Language = 'tr' | 'en';
@@ -170,8 +171,16 @@ function HotspotComponent({
   ), [hotspot.position]);
 
   const spriteRef = useRef<THREE.Sprite>(null);
+  const groupRef = useRef<THREE.Group>(null);
+  const { camera } = useThree();
 
   useFrame((state) => {
+    if (groupRef.current) {
+      // Keep hotspots roughly the same size on screen while the FOV zooms.
+      const fov = (camera as THREE.PerspectiveCamera).fov ?? 75;
+      groupRef.current.scale.setScalar(fov / 75);
+    }
+
     if (hotspot.type && hotspot.type.startsWith('animated-arrow') && spriteRef.current) {
       const time = state.clock.elapsedTime;
       spriteRef.current.position.y = (hotspot.position.y * 50) + Math.sin(time * 2) * 3;
@@ -230,7 +239,7 @@ function HotspotComponent({
     if (!infoIconTexture) return null;
 
     return (
-      <group position={position}>
+      <group ref={groupRef} position={position}>
         <sprite scale={[4, 4, 1.3]} onClick={handleClick}>
           <spriteMaterial map={infoIconTexture} transparent />
         </sprite>
@@ -268,7 +277,7 @@ function HotspotComponent({
     const spriteRotation = new THREE.Euler(-Math.PI / 2, 0, 0);
 
     return (
-      <group position={position}>
+      <group ref={groupRef} position={position}>
         <sprite ref={spriteRef} scale={[15, 15, 1.5]} onClick={handleClick} rotation={spriteRotation}>
           <spriteMaterial map={currentArrowTexture} transparent />
         </sprite>
@@ -381,11 +390,15 @@ export default function VirtualTour({ language }: VirtualTourProps) {
   const [showCredit, setShowCredit] = useState(true);
   const [dismissedError, setDismissedError] = useState<Error | null>(null);
   const [iconTextures, setIconTextures] = useState<HotspotIconTextures>(EMPTY_ICON_TEXTURES);
+  const [isZoomedIn, setIsZoomedIn] = useState(false);
 
   const t = translations[language];
   const copy = errorMessages[language];
   const activeLocation = locations[currentLocation];
-  const { texture, textureId, isLoading, error, retry } = useProgressivePanorama(activeLocation.panoramaId);
+  const { texture, textureId, isLoading, error, retry } = useProgressivePanorama(
+    activeLocation.panoramaId,
+    { zoomedIn: isZoomedIn }
+  );
   const hasTexture = texture !== null;
 
   const displayedLocation = useMemo(() => {
@@ -510,6 +523,15 @@ export default function VirtualTour({ language }: VirtualTourProps) {
     () => new THREE.Vector3(...(displayedLocation?.initialCameraTarget ?? DEFAULT_PANORAMA_ROTATION)),
     [displayedLocation]
   );
+  const cameraConfig = useMemo(
+    () => ({
+      fov: 75,
+      near: 0.1,
+      far: 1000,
+      position: [0, 0, 0.1] as [number, number, number],
+    }),
+    []
+  );
 
   return (
     <div className="relative w-screen h-screen bg-gray-900 overflow-hidden font-inter">
@@ -517,7 +539,7 @@ export default function VirtualTour({ language }: VirtualTourProps) {
       <div className="absolute inset-0 z-0 touch-none">
         <Canvas
           dpr={[1, 2]}
-          camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 0, 0.1] }}
+          camera={cameraConfig}
           className="h-full w-full"
           gl={{ alpha: false, antialias: false, powerPreference: 'high-performance' }}
           onCreated={({ gl }) => {
@@ -525,6 +547,7 @@ export default function VirtualTour({ language }: VirtualTourProps) {
           }}
         >
           <Panorama texture={texture} rotation={panoramaRotation} />
+          <PanoramaZoom onZoomChange={setIsZoomedIn} />
 
           {displayedLocation && displayedLocation.hotspots.map((hotspot, index) => (
             <HotspotComponent
@@ -547,6 +570,7 @@ export default function VirtualTour({ language }: VirtualTourProps) {
             maxDistance={1000}
             target={initialCameraTarget}
             enableZoom={false}
+            enablePan={false}
             rotateSpeed={-0.7}
           />
         </Canvas>

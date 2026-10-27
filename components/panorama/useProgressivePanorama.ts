@@ -15,6 +15,7 @@ const CACHE_LIMITS: Record<PanoramaTier, number> = {
 const DISPOSE_DELAY_MS = 2000;
 const TEXTURE_ANISOTROPY = 8;
 const HIGH_QUALITY_QUIET_MS = 1500;
+const ZOOMED_QUIET_MS = 500;
 const HIGH_QUALITY_RETRY_MS = 300;
 
 interface CachedTexture {
@@ -258,7 +259,11 @@ export interface ProgressivePanorama {
   retry: () => void;
 }
 
-export function useProgressivePanorama(panoramaId: number): ProgressivePanorama {
+export function useProgressivePanorama(
+  panoramaId: number,
+  options: { zoomedIn?: boolean } = {},
+): ProgressivePanorama {
+  const zoomedIn = options.zoomedIn ?? false;
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
   const [textureId, setTextureId] = useState<number | null>(null);
   const [tier, setTier] = useState<PanoramaTier | null>(null);
@@ -271,6 +276,7 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
   const premiumTierRef = useRef<'high' | 'mobile' | null | undefined>(undefined);
   const pointerDownRef = useRef(false);
   const lastInteractionRef = useRef(0);
+  const zoomedInRef = useRef(false);
 
   const applyTexture = useCallback((
     nextTexture: THREE.Texture,
@@ -297,6 +303,10 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
       }
     };
   }, []);
+
+  useEffect(() => {
+    zoomedInRef.current = zoomedIn;
+  }, [zoomedIn]);
 
   useEffect(() => {
     const markInteraction = () => {
@@ -365,7 +375,11 @@ export function useProgressivePanorama(panoramaId: number): ProgressivePanorama 
         return false;
       }
 
-      return Date.now() - lastInteractionRef.current >= HIGH_QUALITY_QUIET_MS;
+      const quietMs = zoomedInRef.current
+        ? ZOOMED_QUIET_MS
+        : HIGH_QUALITY_QUIET_MS;
+
+      return Date.now() - lastInteractionRef.current >= quietMs;
     };
 
     const applyHighWhenQuiet = (
