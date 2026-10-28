@@ -298,9 +298,16 @@ export default function PanoramaZoom({
         Math.hypot(touch.clientX - lastTapX, touch.clientY - lastTapY) <
           DOUBLE_TAP_DISTANCE;
 
-      if (isDoubleTap && !isHotspotInteractionRecent()) {
-        toggleZoom();
+      if (isDoubleTap) {
         lastTapAt = 0;
+
+        // Let the synthesized click (and the hotspot press/click marker) run
+        // before deciding whether this was a zoom gesture or a navigation tap.
+        window.setTimeout(() => {
+          if (!isHotspotInteractionRecent()) {
+            toggleZoom();
+          }
+        }, 60);
         return;
       }
 

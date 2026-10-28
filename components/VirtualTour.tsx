@@ -236,12 +236,19 @@ function HotspotComponent({
     onHotspotClick(hotspot);
   }, [hotspot, onHotspotClick]);
 
+  const handlePress = useCallback((event: ThreeEvent<PointerEvent>) => {
+    event.stopPropagation();
+    // Mark on pointerdown, before the synthesized click and before a touchend
+    // double-tap handler can mistake two location taps for a zoom gesture.
+    markHotspotInteraction();
+  }, []);
+
   if (hotspot.type === 'info') {
     if (!infoIconTexture) return null;
 
     return (
       <group ref={groupRef} position={position}>
-        <sprite scale={[4, 4, 1.3]} onClick={handleClick}>
+        <sprite scale={[4, 4, 1.3]} onClick={handleClick} onPointerDown={handlePress}>
           <spriteMaterial map={infoIconTexture} transparent />
         </sprite>
         {labelTexture && (
@@ -279,7 +286,13 @@ function HotspotComponent({
 
     return (
       <group ref={groupRef} position={position}>
-        <sprite ref={spriteRef} scale={[15, 15, 1.5]} onClick={handleClick} rotation={spriteRotation}>
+        <sprite
+          ref={spriteRef}
+          scale={[15, 15, 1.5]}
+          onClick={handleClick}
+          onPointerDown={handlePress}
+          rotation={spriteRotation}
+        >
           <spriteMaterial map={currentArrowTexture} transparent />
         </sprite>
       </group>
