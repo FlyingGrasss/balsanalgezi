@@ -5,13 +5,15 @@ import { useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 
+import { isHotspotInteractionRecent } from '@/lib/panorama-interaction';
+
 const DEFAULT_FOV = 75;
 const MIN_FOV = 35;
 const ZOOMED_FOV = MIN_FOV;
 const MAX_FOV = 82;
 const ZOOM_DETAIL_THRESHOLD = 55;
 const WHEEL_STEP = 4;
-const DOUBLE_TAP_MS = 500;
+const DOUBLE_TAP_MS = 320;
 const DOUBLE_TAP_DISTANCE = 30;
 const TAP_MAX_MS = 350;
 const TAP_MOVE_DISTANCE = 30;
@@ -116,6 +118,11 @@ export default function PanoramaZoom({
 
     const onDoubleClick = (event: MouseEvent) => {
       event.preventDefault();
+
+      if (isHotspotInteractionRecent()) {
+        return;
+      }
+
       toggleZoom();
     };
 
@@ -291,7 +298,7 @@ export default function PanoramaZoom({
         Math.hypot(touch.clientX - lastTapX, touch.clientY - lastTapY) <
           DOUBLE_TAP_DISTANCE;
 
-      if (isDoubleTap) {
+      if (isDoubleTap && !isHotspotInteractionRecent()) {
         toggleZoom();
         lastTapAt = 0;
         return;

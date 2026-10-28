@@ -8,6 +8,7 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { X } from 'lucide-react';
 
 import { preloadPanoramaImage } from '@/lib/panorama-preload';
+import { markHotspotInteraction } from '@/lib/panorama-interaction';
 import {
   GLOBAL_SIDEBAR_LOCATION_INDICES,
   locations,
@@ -430,6 +431,8 @@ export default function VirtualTour({ language }: VirtualTourProps) {
   }, []);
 
   const handleHotspotClick = useCallback((hotspot: Hotspot) => {
+    markHotspotInteraction();
+
     if (hotspot.target !== undefined) {
       goToLocation(hotspot.target);
     } else if (hotspot.info) {
